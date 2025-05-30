@@ -1,0 +1,22 @@
+[
+    {
+        "name": "logo",
+        "settings": [
+            {
+                "type": "image_picker",
+                "label": "logo",
+                "id": "logo"       
+            },
+            {
+                "type": "range",
+                "min": 50,
+                "max": 300,
+                "default":100,
+                "step": 10,
+                "unit": "px",
+                "id": "logo_width",
+                "label": "logo width"
+            }
+        ]
+    }
+]

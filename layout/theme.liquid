@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    >
+
+    {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+    {{ 'swiper-slider.css' | asset_url | stylesheet_tag }}
+    {{ content_for_header }}
+
+    {% style %}
+      html {
+        box-sizing: border-box;
+        font-size: 12px;
+        height: 100%;
+      }
+
+      body {
+        min-height: 100%;
+        margin: 0;
+        font-size: 1.5rem;
+        letter-spacing: 0.06rem;
+      }
+    {% endstyle %}
+  </head>
+  <body>
+    {{ content_for_layout }}
+    <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'swiper-slider.js' | asset_url }}" defer="defer"></script>
+  </body>
+</html>
