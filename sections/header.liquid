@@ -10,7 +10,9 @@
   <div class="nav-links-wrapper">
     <ul class="nav-links">
       {% for link in linklists['main-menu'].links %}
-        <li class="link-item">{{ link.title | escape }}</li>
+        <a href="{{ link.url }}" class="nav-link">
+          <li class="link-item">{{ link.title | escape }}</li>
+        </a>
       {% endfor %}
     </ul>
   </div>
@@ -34,7 +36,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 5rem;
+    padding: 1rem 10rem;
     border-bottom: 1px solid gray;
   }
 
@@ -71,6 +73,12 @@
     cursor: pointer;
   }
 
+  .nav-link{
+    text-decoration: none;
+    color: black;
+    text-transform: capitalize;
+  }
+
   .icons {
     display: flex;
     gap: 10px;
@@ -99,6 +107,9 @@
   }
 
   @media (max-width: 768px) {
+    .header-container{
+      padding: 1rem 2rem;
+    }
     .nav-links{
       display: none;
     }

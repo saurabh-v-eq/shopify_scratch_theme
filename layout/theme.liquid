@@ -29,6 +29,7 @@
     {% endstyle %}
   </head>
   <body>
+    {% sections 'header-group' %}
     {{ content_for_layout }}
     <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'swiper-slider.js' | asset_url }}" defer="defer"></script>

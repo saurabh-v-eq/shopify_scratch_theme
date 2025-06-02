@@ -8,16 +8,9 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {
-    "hero_banner_pkELXj": {
-      "type": "hero-banner",
-      "name": "Hero Banner",
-      "settings": {
-        "img": "shopify://shop_images/banner_img.jpg"
-      }
-    }
-  },
-  "order": [
-    "hero_banner_pkELXj"
-  ]
+  "current": {
+    "logo": "shopify://shop_images/6543592.jpg",
+    "logo_width": 60,
+    "content_for_index": []
+  }
 }

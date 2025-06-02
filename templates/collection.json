@@ -9,15 +9,12 @@
  */
 {
   "sections": {
-    "hero_banner_pkELXj": {
-      "type": "hero-banner",
-      "name": "Hero Banner",
-      "settings": {
-        "img": "shopify://shop_images/banner_img.jpg"
-      }
+    "collection": {
+      "type": "home-collection",
+      "settings": {}
     }
   },
   "order": [
-    "hero_banner_pkELXj"
+    "collection"
   ]
 }

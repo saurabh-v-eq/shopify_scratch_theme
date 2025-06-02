@@ -1,0 +1,141 @@
+<div class="banner-section">
+  <div class="banner-img">
+    <img src="{{ section.settings.img | image_url }}" alt="Banner Image" class="banner-image" height="" width="">
+  </div>
+  <div class="banner-text">
+    <div class="ratings-wrapper">
+      <ul class="ratings-list">
+        {% for i in (1..5) %}
+          <li class="rating-item">
+            <img src="{{ 'rating-star.svg' | file_url }}" alt="Star" class="rating-star" height="" width="">
+          </li>
+        {% endfor %}
+      </ul>
+      <p class="ratings-text">Rated 4.9/5 by thousands of Happy Customers</p>
+    </div>
+    <h1 class="banner-heading">New Season, New Style</h1>
+    <p class="banner-subheading">
+      Discover the looks everyone’s talking about — from bold new arrivals to timeless essentials, crafted to elevate
+      your wardrobe and inspire your style journey this season.
+    </p>
+    <a href="/collections/all" class="banner-button">Shop Now</a>
+  </div>
+</div>
+
+{% style %}
+  .banner-section {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+  }
+
+  .banner-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .banner-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+
+  .banner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    max-width: 90%;
+    padding: 1rem;
+    z-index: 1; /* on top */
+  }
+
+  .ratings-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 10px;
+  }
+
+  .ratings-list {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+
+  .rating-item {
+    margin: 0 0.2rem;
+  }
+
+  .rating-star {
+    width: 15px;
+    height: auto;
+  }
+
+  .banner-heading {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .banner-subheading {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .banner-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+  }
+
+  @media (max-width: 768px) {
+    .banner-heading {
+      font-size: 2.5rem;
+    }
+
+    .banner-subheading {
+      font-size: 1.4rem;
+    }
+
+    .rating-star {
+      width: 16px;
+    }
+
+    .banner-button {
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Select Banner Image",
+      "id": "img"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

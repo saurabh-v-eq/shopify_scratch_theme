@@ -1,0 +1,48 @@
+{{ 'main-product.css' | asset_url | stylesheet_tag }}
+<div class="product-detail">
+  <div class="product-image">
+    <img
+      src="{{ product.featured_image | image_url: width: 700 }}"
+      class="img-fluid"
+      alt="{{ product.featured_image.alt }}"
+      height=""
+      width=""
+    >
+  </div>
+  <div class="product-info">
+    <h1 class="product-title">{{ product.title | escape | upcase }}</h1>
+    <p class="product-des">{{ product.description }}</p>
+    <p class="product-price">{{ product.price | money_with_currency }}</p>
+    <div class="variant-info">
+        {% if product.variants.size > 1 %}
+          <form method="post" action="{{ routes.cart_url }}">
+            <p class="variant-select">Select Variants:</p>
+            <ul class="variant-list">
+              {% for variant in product.variants %}
+                <li class="variant-item" data-value="{{ variant.id }}">{{ variant.title }}</li>
+              {% endfor %}
+            </ul>
+            <button type="submit" class="cartButton">Add to Cart</button>
+          </form>
+        {% else %}
+          <form method="post" action="{{ routes.cart_url }}">
+            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+            <button type="submit" class="cartButton">Add to Cart</button>
+          </form>
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Product Detail",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Detail"
+    }
+  ]
+}
+{% endschema %}

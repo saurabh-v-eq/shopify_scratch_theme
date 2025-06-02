@@ -1,14 +1,14 @@
 <script src="{{ 'load-more-product.js' | asset_url }}" defer></script>
 <h2 class="collection-title">Collection Products</h2>
 <section class="product-grid" id="product-grid">
-  {% paginate collections.frontpage.products by 8 %}
+  {% paginate collections.frontpage.products by 4 %}
     {% for product in collections.frontpage.products %}
       {% render 'product-card', product: product %}
     {% endfor %}
   {% endpaginate %}
 </section>
 
-{% paginate collections.frontpage.products by 8 %}
+{% paginate collections.frontpage.products by 4 %}
   {% if paginate.next %}
     <div class="load-more-wrapper">
       <button class="btn" id="load-more" data-next-url="{{ paginate.next.url }}">Load More</button>
@@ -64,6 +64,40 @@
     border: none;
     font-size: 15px;
     cursor: pointer;
+  }
+
+    .cartButton{
+    position: relative;
+    max-width: 200px;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .cartButton::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  border: 1px solid black;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.cartButton:hover::after {
+  top: 0;
+  left: 0;
+}
+  @media screen and (max-width: 768px){
+    .product-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   @media screen and (max-width: 480px) {
