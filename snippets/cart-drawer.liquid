@@ -1,0 +1,71 @@
+{{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+<div class="cart-drawer-overlay" id="cart-drawer-overlay"></div>
+<div id="cart-drawer" class="cart-drawer">
+  <div class="cart-drawer-content">
+    <button class="cart-drawer-close" id="cart-drawer-close">x</button>
+
+    <div id="cart-drawer-items">
+      {% if cart.item_count > 0 %}
+        <h2 class="heading">Your Cart ({{ cart.item_count }} items)</h2>
+        <ul class="cart-items-list">
+          {% for item in cart.items %}
+            <li class="cart-item">
+              <img
+                src="{{ item.image | image_url }}"
+                alt="{{ item.product.title }}"
+                class="item-image"
+                height=""
+                width=""
+              >
+              <div class="cart-item-details">
+                <p>{{ item.product.title }}</p>
+                <p>Qty: {{ item.quantity }}</p>
+                <p>{{ item.final_line_price | money }}</p>
+              </div>
+              <a href="{{ item.url_to_remove }}" class="remove-item-button"><i class="fa-solid fa-trash"></i></a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="cart-empty-message">
+          <p>Your cart is empty</p>
+          <a href="{{ routes.collections_url }}" class="continue-shopping-button">Continue Shopping</a>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if cart.item_count > 0 %}
+      <div class="cart-drawer-footer">
+        <p>
+          <strong>Total:</strong> <span id="cart-drawer-total">{{ cart.total_price | money }}</span>
+        </p>
+        <a href="{{ routes.cart_url }}" class="view-cart-button">View Cart</a>
+        <a href="/checkout" class="checkout-button">Checkout</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartOverlay = document.getElementById('cart-drawer-overlay');
+    const cartOpenBtn = document.getElementById('cart-icon-button');
+    const cartCloseBtn = document.getElementById('cart-drawer-close');
+
+    cartOpenBtn.addEventListener('click', () => {
+      cartDrawer.classList.add('open');
+      cartOverlay.classList.add('active');
+    });
+
+    cartCloseBtn.addEventListener('click', () => {
+      cartDrawer.classList.remove('open');
+      cartOverlay.classList.remove('active');
+    });
+
+    cartOverlay.addEventListener('click', () => {
+      cartDrawer.classList.remove('open');
+      cartOverlay.classList.remove('active');
+    });
+  });
+</script>

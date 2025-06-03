@@ -8,10 +8,13 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {
-    "logo": "shopify://shop_images/6543592.jpg",
-    "logo_width": 60,
-    "cart_type": "drawer",
-    "content_for_index": []
-  }
+    "sections": {
+        "cart-page": {
+            "type": "main-cart-items",
+            "settings": {}
+        }
+    },
+    "order": [
+        "cart-page"
+    ]
 }

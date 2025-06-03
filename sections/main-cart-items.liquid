@@ -1,0 +1,70 @@
+{{ 'main-cart-page.css' | asset_url | stylesheet_tag }}
+{% if cart.empty? %}
+  <div class="empty-cart">
+    <p>Your cart is currently empty.</p>
+    <a href="{{ routes.collections_url }}" class="continue-shopping-button">Continue Shopping</a>
+  </div>
+{% else %}
+  <h2 class="cart-heading">Your Cart({{ cart.item_count }} items)</h2>
+  {% form 'cart', cart, class: 'cart-items' %}
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">Product</th>
+          <th colspan="1">Quantity</th>
+          <th colspan="1">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+          <tr class="cart-item-row">
+            <td class="cart-item-media">
+              <div class="cart-item__image-container">
+                <img
+                  src="{{ item.image  | image_url }}"
+                  alt="{{ item.title }}"
+                  height=""
+                  width=""
+                  class="cart-item-image"
+                >
+              </div>
+            </td>
+            <td class="cart-item-details">
+              <strong>{{ item.product.title }}</strong>
+            </td>
+            <td class="cart-item-quantity">
+              <div class="quantity-wrapper">
+                <button type="button" class="quantity-decrement">-</button>
+                <input name="updates[]" value="{{ item.quantity }}" min="1" class="quantity-input">
+                <button type="button" class="quantity-increment">+</button>
+              </div>
+              <a href="{{ item.url_to_remove }}"><i class="fa-solid fa-trash"></i></a>
+            </td>
+            <td class="cart-item-total">
+              <p>{{ item.final_line_price | money }}</p>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="cart-summary">
+      {% if cart.total_discount > 0 %}
+        <p class="cart-total-discount">Discount: {{ cart.total_discount | money }}</p>
+      {% endif %}
+      <p class="cart-total-price">Total: {{ cart.total_price | money }}</p>
+      <button type="submit" name="checkout" class="cart-checkout-button">Checkout</button>
+    </div>
+  {% endform %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Cart Drawer"
+    }
+  ]
+}
+{% endschema %}

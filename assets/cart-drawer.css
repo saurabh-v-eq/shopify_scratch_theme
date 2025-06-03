@@ -1,0 +1,121 @@
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+    z-index: 9999;
+  }
+
+  .cart-drawer.open {
+    transform: translateX(0);
+  }
+
+  .cart-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: none;
+  }
+
+  .cart-drawer-overlay.active {
+    display: block;
+  }
+
+  .cart-drawer-close {
+    position: absolute;
+    top: 22px;
+    right: 25px;
+    font-size: 2.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .cart-drawer-content {
+    position: relative;
+    padding: 2rem;
+    height: 100%;
+  }
+
+  .cart-drawer-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 2rem;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+  }
+
+  .view-cart-button,
+  .checkout-button {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    text-align: center;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+  }
+
+  .cart-empty-message {
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    text-align: center;
+  }
+
+  .cart-empty-message p {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .heading {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .cart-item {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 15px;
+  }
+
+  .item-image {
+    width: 40%;
+    height: auto;
+  }
+
+  .cart-items-list {
+    max-height: calc(100% - 250px);
+    overflow-y: auto;
+  }
+
+  .remove-item-button {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.4rem;
+  cursor: pointer;
+  align-self: flex-start;
+  padding: 0;
+  margin-left: auto;
+  transition: color 0.2s;
+}
+
+.remove-item-button:hover {
+  color: red;
+}

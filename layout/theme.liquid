@@ -29,6 +29,10 @@
     {% endstyle %}
   </head>
   <body>
+    {% if settings.cart_type == 'drawer' %}
+      {% render 'cart-drawer' %}
+    {% endif %}
+
     {% sections 'header-group' %}
     {{ content_for_layout }}
     <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>

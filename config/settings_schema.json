@@ -18,5 +18,26 @@
                 "label": "logo width"
             }
         ]
+    },
+    {
+        "name": "Cart Settings",
+        "settings": [
+            {
+                "type": "select",
+                "id": "cart_type",
+                "label": "Cart Type",
+                "default": "drawer",
+                "options": [
+                    {
+                        "value": "drawer",
+                        "label": "Drawer"
+                    },
+                    {
+                        "value": "page",
+                        "label": "Page"
+                    }
+                ]
+            }
+        ]
     }
 ]

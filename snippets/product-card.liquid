@@ -1,16 +1,22 @@
 <div class="product-card">
   <div class="product-img">
     <a href="{{ product.url }}">
-      <img
-        src="{{ product.featured_image | image_url }}"
-        alt="{{ product.featured_image.alt | escape }}"
-        height=""
-        width=""
-      >
+      {% if product.featured_image != blank %}        
+        <img
+          src="{{ product.featured_image | image_url }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          height=""
+          width=""
+        >
+      {% endif %}
     </a>
   </div>
-  <h4>{{ product.title | capitalize }}</h4>
-  <p>{{ product.price | money_with_currency }}</p>
+  {% if product.title != blank %}
+    <h4>{{ product.title | capitalize }}</h4>
+  {% endif %}
+  {% if product.price != blank %}
+    <p>{{ product.price | money_with_currency }}</p>
+  {% endif %}
 
   <form method="post" action={{ routes.cart_add_url }}>
     <input type="hidden" name="id" value="{{ product.variants.first.id }}">
