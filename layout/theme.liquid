@@ -26,6 +26,11 @@
         font-size: 1.5rem;
         letter-spacing: 0.06rem;
       }
+
+      .no-scroll {
+        overflow: hidden;
+        height: 100vh;
+      }
     {% endstyle %}
   </head>
   <body>
@@ -35,6 +40,7 @@
 
     {% sections 'header-group' %}
     {{ content_for_layout }}
+    {% sections 'footer-group' %}
     <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'swiper-slider.js' | asset_url }}" defer="defer"></script>
   </body>

@@ -1,0 +1,66 @@
+{{ 'footer.css' | asset_url | stylesheet_tag }}
+<footer class="footer">
+  <div class="footer-container">
+    {%- assign footer_menus = linklists['footer'] -%} 
+    {% if footer_menus.links.size > 0 %}  
+      {% for link in footer_menus.links %}        
+        <div class="footer-column">
+          <h4>{{ link.title }}</h4>
+          {% if link.links.size > 0 %}            
+            <ul>
+              {% for sublink in link.links %}
+                <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}    
+    {% endif %}
+
+    <div class="footer-column">
+      {% if section.settings.heading != blank %}
+        <h4>{{ section.settings.heading }}</h4>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email" id="newsletter-input">
+        {% if section.settings.btn_heading != blank %}          
+          <button type="submit">{{ section.settings.btn_heading }}</button>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Newsletter Heading",
+      "id": "heading",
+      "default": "Newsletter"
+    },
+    {
+      "type": "text",
+      "label": "Newsletter Subheading",
+      "id": "subheading",
+      "default": "Subscribe to get updates & offers."
+    },
+    {
+      "type": "text",
+      "label": "Button Heading",
+      "id": "btn_heading",
+      "default": "Subscribe"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}

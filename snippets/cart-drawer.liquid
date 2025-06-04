@@ -19,6 +19,7 @@
               >
               <div class="cart-item-details">
                 <p>{{ item.product.title }}</p>
+                <P>{{ item.variant.title }}</P>
                 <p>Qty: {{ item.quantity }}</p>
                 <p>{{ item.final_line_price | money }}</p>
               </div>
@@ -56,16 +57,19 @@
     cartOpenBtn.addEventListener('click', () => {
       cartDrawer.classList.add('open');
       cartOverlay.classList.add('active');
+      document.body.classList.add('no-scroll');
     });
 
     cartCloseBtn.addEventListener('click', () => {
       cartDrawer.classList.remove('open');
       cartOverlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
     });
 
     cartOverlay.addEventListener('click', () => {
       cartDrawer.classList.remove('open');
       cartOverlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
     });
   });
 </script>

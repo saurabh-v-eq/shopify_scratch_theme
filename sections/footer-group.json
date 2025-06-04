@@ -8,17 +8,16 @@
  * ------------------------------------------------------------
  */
 {
-  "name": "header",
-  "type": "header",
+  "name": "footer",
+  "type": "footer",
   "sections": {
-    "header": {
-      "type": "header",
-      "settings": {
-        "logo_position": "center"
-      }
+    "footer_qgPVyh": {
+      "type": "footer",
+      "name": "Footer",
+      "settings": {}
     }
   },
   "order": [
-    "header"
+    "footer_qgPVyh"
   ]
 }

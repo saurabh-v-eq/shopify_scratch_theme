@@ -1,7 +1,8 @@
 {{ 'main-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ajax-addToCart.js' | asset_url }}" defer></script>
 <div class="product-detail">
   <div class="product-image">
-    {% if product.featured_image != blank %}      
+    {% if product.featured_image != blank %}
       <img
         src="{{ product.featured_image | image_url: width: 700 }}"
         class="img-fluid"
@@ -22,28 +23,38 @@
       <p class="product-price">{{ product.price | money_with_currency }}</p>
     {% endif %}
     <div class="variant-info">
-        {% if product.variants.size > 1 %}
-          <form method="post" action="{{ routes.cart_add_url }}">
-            <p class="variant-select">Select Variants:</p>
-            <ul class="variant-list">
-              {% for variant in product.variants %}
-                {% if variant.title != blank %}
-                  <li class="variant-item" data-value="{{ variant.id }}">{{ variant.title }}</li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-            <button type="submit" class="cartButton">Add to Cart</button>
-          </form>
-        {% else %}
-          <form method="post" action="{{ routes.cart_add_url }}">
-            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-            <button type="submit" class="cartButton">Add to Cart</button>
-          </form>
-        {% endif %}
+      {% if product.variants.size > 1 %}
+        <form method="post" action="{{ routes.cart_add_url }}">
+          <p class="variant-select">Select Variants:</p>
+          <ul class="variant-list">
+            {% for variant in product.variants %}
+              {% if variant.title != blank %}
+                <li class="variant-item">
+                  <input
+                    type="radio"
+                    name="id"
+                    value="{{ variant.id }}"
+                    id="variant-{{ variant.id }}"
+                    {% if forloop.first %}
+                      checked
+                    {% endif %}
+                  >
+                  <label for="variant-{{ variant.id }}">{{ variant.title }}</label>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          <button type="submit" class="cartButton">Add to Cart</button>
+        </form>
+      {% else %}
+        <form method="post" action="{{ routes.cart_add_url }}">
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <button type="submit" class="cartButton">Add to Cart</button>
+        </form>
+      {% endif %}
     </div>
   </div>
 </div>
-
 
 {% schema %}
 {

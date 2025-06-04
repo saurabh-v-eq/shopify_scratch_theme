@@ -31,6 +31,9 @@
             </td>
             <td class="cart-item-details">
               <strong>{{ item.product.title }}</strong>
+              {% if item.variant.title != blank %}
+                <P>{{ item.variant.title }}</P>
+              {% endif %}
             </td>
             <td class="cart-item-quantity">
               <div class="quantity-wrapper">

@@ -23,7 +23,7 @@
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 9998;
+    z-index: 9999;
     display: none;
   }
 
@@ -107,7 +107,7 @@
   .remove-item-button {
   background: none;
   border: none;
-  color: #888;
+  color: black;
   font-size: 1.4rem;
   cursor: pointer;
   align-self: flex-start;
