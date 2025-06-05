@@ -41,7 +41,7 @@
                 <input name="updates[]" value="{{ item.quantity }}" min="1" class="quantity-input">
                 <button type="button" class="quantity-increment">+</button>
               </div>
-              <a href="{{ item.url_to_remove }}"><i class="fa-solid fa-trash"></i></a>
+              <a href="{{ item.url_to_remove }}" class="remove-item-button" data-line="{{ forloop.index }}"><i class="fa-solid fa-trash"></i></a>
             </td>
             <td class="cart-item-total">
               <p>{{ item.final_line_price | money }}</p>

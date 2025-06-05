@@ -23,7 +23,9 @@
                 <p>Qty: {{ item.quantity }}</p>
                 <p>{{ item.final_line_price | money }}</p>
               </div>
-              <a href="{{ item.url_to_remove }}" class="remove-item-button"><i class="fa-solid fa-trash"></i></a>
+              <a href="{{ item.url_to_remove }}" class="remove-item-button" data-line="{{ forloop.index }}"
+                ><i class="fa-solid fa-trash"></i
+              ></a>
             </li>
           {% endfor %}
         </ul>

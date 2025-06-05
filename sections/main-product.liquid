@@ -20,12 +20,14 @@
       <p class="product-des">{{ product.description }}</p>
     {% endif %}
     {% if product.price != blank %}
-      <p class="product-price">{{ product.price | money_with_currency }}</p>
+      <p class="product-price">{{ product.price | money }}</p>
     {% endif %}
     <div class="variant-info">
       {% if product.variants.size > 1 %}
         <form method="post" action="{{ routes.cart_add_url }}">
-          <p class="variant-select">Select Variants:</p>
+          {% if section.settings.variant_label != blank %}
+            <p class="variant-select">{{ section.settings.variant_label }}</p>
+          {% endif %}
           <ul class="variant-list">
             {% for variant in product.variants %}
               {% if variant.title != blank %}
@@ -44,12 +46,16 @@
               {% endif %}
             {% endfor %}
           </ul>
-          <button type="submit" class="cartButton">Add to Cart</button>
+          {% if section.settings.btn_title != blank %}
+            <button type="submit" class="cartButton">{{ section.settings.btn_title }}</button>
+          {% endif %}
         </form>
       {% else %}
         <form method="post" action="{{ routes.cart_add_url }}">
           <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-          <button type="submit" class="cartButton">Add to Cart</button>
+          {% if section.settings.btn_title != blank %}
+            <button type="submit" class="cartButton">{{ section.settings.btn_title }}</button>
+          {% endif %}
         </form>
       {% endif %}
     </div>
@@ -59,7 +65,20 @@
 {% schema %}
 {
   "name": "Product Detail",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "variant_label",
+      "label": "Variant selection label",
+      "default": "Select Variants:"
+    },
+    {
+      "type": "text",
+      "label": "Cart Button Title",
+      "id": "btn_title",
+      "default": "Add to Cart"
+    }
+  ],
   "presets": [
     {
       "name": "Product Detail"

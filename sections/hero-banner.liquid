@@ -1,0 +1,232 @@
+<section class="hero-banner-section swiper">
+  <div class="swiper-wrapper">
+    {% for block in section.blocks %}
+      <div class="hero-banner swiper-slide">
+        {% if block.settings.image != blank %}            
+            <img
+              src="{{ block.settings.image | image_url }}"
+              alt="Banner {{ forloop.index }}"
+              class="hero-image"
+              loading="lazy"
+              height=""
+              width=""
+            >
+        {% endif %}
+        <div class="hero-content">
+          {% if block.settings.heading != blank %}
+            <h1>{{ block.settings.heading }}</h1>
+          {% endif %}
+          {% if block.settings.subheading != blank %}
+            <p>{{ block.settings.subheading }}</p>
+          {% endif %}
+          {% if block.settings.button_text != blank %}
+            <a href="{{ block.settings.button_link }}" class="hero-button">
+              {{ block.settings.button_text }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <div class="swiper-pagination"></div>
+</section>
+
+{% style %}
+  .hero-banner-section {
+    width: 100%;
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: white;
+  }
+
+  .hero-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .hero-content {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #f5f5f5;
+    padding: 0 20px;
+    line-height: 1.6;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  }
+
+  .hero-content h1 {
+    font-size: 3.2rem;
+    margin-bottom: 12px;
+  }
+
+  .hero-content p {
+    font-size: 1.4rem;
+    margin-bottom: 22px;
+  }
+
+  .hero-button {
+    display: inline-block;
+    padding: 14px 34px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .hero-button:hover {
+    background-color: #222;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 1024px) {
+    .hero-banner-section {
+      height: 400px;
+    }
+
+    .hero-image {
+      object-position: top center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-banner-section {
+      height: 500px;
+    }
+
+    .hero-image {
+      object-position: right center;
+    }
+
+    .hero-content h1 {
+      font-size: 2.4rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+    }
+
+    .hero-button {
+      padding: 12px 28px;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-banner-section {
+      height: 600px;
+    }
+
+    .hero-content h1 {
+      font-size: 2rem;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+    }
+
+    .hero-button {
+      padding: 10px 24px;
+      font-size: 0.95rem;
+    }
+  }
+{% endstyle %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new Swiper('.hero-banner-section.swiper', {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true,
+      },
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Hero Banner - Multi",
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Banner Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Style That Defines You"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Discover the latest trends in fashion."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link",
+          "default": "/collections/all"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multi Hero Banner",
+      "blocks": [{ "type": "banner" }, { "type": "banner" }, { "type": "banner" }]
+    }
+  ]
+}
+{% endschema %}

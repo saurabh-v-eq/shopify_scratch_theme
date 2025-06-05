@@ -11,13 +11,54 @@
   "sections": {
     "hero_banner_pkELXj": {
       "type": "hero-banner",
+      "blocks": {
+        "banner_4TkNNQ": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/banner-img.jpg",
+            "heading": "Style That Defines You",
+            "subheading": "Discover the latest trends in fashion.",
+            "button_text": "Shop Now",
+            "button_link": "shopify://collections/all"
+          }
+        },
+        "banner_FLXwAG": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/banner-img2.jpg",
+            "heading": "Style That Defines You",
+            "subheading": "Discover the latest trends in fashion.",
+            "button_text": "Shop Now",
+            "button_link": "shopify://collections/all"
+          }
+        },
+        "banner_PFWLUG": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/banner-img3.jpg",
+            "heading": "Style That Defines You",
+            "subheading": "Discover the latest trends in fashion.",
+            "button_text": "Shop Now",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "banner_4TkNNQ",
+        "banner_FLXwAG",
+        "banner_PFWLUG"
+      ],
       "name": "Hero Banner",
-      "settings": {
-        "img": "shopify://shop_images/banner_img.jpg"
-      }
+      "settings": {}
+    },
+    "newsletter_qxXgTT": {
+      "type": "Newsletter",
+      "name": "Newsletter",
+      "settings": {}
     }
   },
   "order": [
-    "hero_banner_pkELXj"
+    "hero_banner_pkELXj",
+    "newsletter_qxXgTT"
   ]
 }

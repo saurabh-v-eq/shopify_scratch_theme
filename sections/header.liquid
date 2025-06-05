@@ -48,65 +48,80 @@
 
 {% style %}
   .header-container {
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 10rem;
+    padding: 1.5rem 4rem;
     border-bottom: 1px solid gray;
+    position: relative;
+    background-color: white;
   }
 
   .logo-left {
-    display: flex;
     justify-content: space-between;
-    align-items: center;
   }
 
   .logo-center {
-    position: relative;
     justify-content: center;
-    align-items: center;
+  }
+
+  .logo-center .nav-links-wrapper,
+  .logo-center .icons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .logo-center .nav-links-wrapper {
-    position: absolute;
-    left: 5rem;
-    top: 50%;
-    transform: translateY(-50%);
+    left: 2rem;
   }
 
   .logo-center .icons {
-    position: absolute;
-    right: 5rem;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 2rem;
+  }
+
+  /* Logo image */
+  .logo img {
+    max-height: 50px;
+    width: auto;
+  }
+
+  /* Navigation links */
+  .nav-links-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
   }
 
   .nav-links {
     display: flex;
     list-style: none;
-    gap: 15px;
-    cursor: pointer;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
   }
 
   .nav-link {
     text-decoration: none;
     color: black;
-    text-transform: capitalize;
+    font-weight: 500;
+    padding: 8px 12px;
+    transition: color 0.3s ease;
   }
 
+  .nav-link:hover {
+    color: #555;
+  }
+
+  /* Icons */
   .icons {
     display: flex;
-    gap: 10px;
-  }
-
-  .header-container svg {
-    height: 20px;
-    width: 20px;
-  }
-
-  .logo {
-    margin-right: 10px;
+    gap: 15px;
   }
 
   .user-icon,
@@ -114,32 +129,51 @@
     cursor: pointer;
   }
 
+  .header-container svg {
+    height: 20px;
+    width: 20px;
+    fill: currentColor;
+  }
+
+  /* Nav toggle for mobile */
   .nav-toggle {
-    position: absolute;
-    left: 5rem;
     display: none;
     font-size: 28px;
     cursor: pointer;
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .header-container {
+      padding: 1.5rem 2rem;
+    }
   }
 
   @media (max-width: 768px) {
     .header-container {
-      padding: 1rem 2rem;
+      padding: 1rem 1.5rem;
     }
-    .nav-links {
+
+    .nav-links-wrapper {
       display: none;
     }
 
     .nav-toggle {
       display: block;
     }
+  }
 
-    .logo-left .nav-toggle {
-      position: absolute;
-      left: 50%;
+  @media (max-width: 480px) {
+    .header-container {
+      padding: 1rem;
     }
   }
 {% endstyle %}
+
 
 {% schema %}
 {

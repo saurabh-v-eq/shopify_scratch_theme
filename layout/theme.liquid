@@ -10,7 +10,6 @@
     >
 
     {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
-    {{ 'swiper-slider.css' | asset_url | stylesheet_tag }}
     {{ content_for_header }}
 
     {% style %}
@@ -42,6 +41,6 @@
     {{ content_for_layout }}
     {% sections 'footer-group' %}
     <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'swiper-slider.js' | asset_url }}" defer="defer"></script>
+    
   </body>
 </html>

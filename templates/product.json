@@ -8,11 +8,16 @@
  * ------------------------------------------------------------
  */
 {
-    "sections": {
-        "main": {
-            "type": "main-product",
-            "settings" : {}
-        }
-    },
-    "order": ["main"]
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "variant_label": "Select Variants:",
+        "btn_title": "Add to Cart"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
 }
