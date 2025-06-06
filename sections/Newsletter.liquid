@@ -3,15 +3,21 @@
     <h2>Subscribe to Our Newsletter</h2>
     <p>Be the first to know about new arrivals, exclusive deals, and more.</p>
 
-    <form class="newsletterForm" method="post" action="#">
+    {% form 'customer', class: 'newsletterForm', id: 'newsletter-form' %}      
       <input
         type="email"
-        name="email"
+        name="contact[email]"
         placeholder="Enter your email"
         required
       >
       <button type="submit" class="subscribe-btn">Subscribe</button>
-    </form>
+
+      {% if form.posted_successfully? %}
+        <P class="success-message">Thank you for subscribing!</P>
+      {% elsif form.errors %}
+        <P class="error-message">{{ form.errors | default_errors }}</P>
+      {% endif %}
+    {% endform %}
   </div>
 </section>
 
@@ -126,11 +132,11 @@
 
 {% schema %}
 {
-  "name": "Newsletter",
+  "name": "t:sections.Newsletter.name",
   "settings": [],
   "presets": [
     {
-      "name": "Newsletter"
+      "name": "t:sections.Newsletter.presets.name"
     }
   ]
 }

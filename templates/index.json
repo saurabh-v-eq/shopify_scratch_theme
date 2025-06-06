@@ -51,6 +51,29 @@
       "name": "Hero Banner",
       "settings": {}
     },
+    "collections_8d7PWy": {
+      "type": "collections",
+      "blocks": {
+        "collection_m8eqEF": {
+          "type": "collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "collection_3xkbHq": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-speakers"
+          }
+        }
+      },
+      "block_order": [
+        "collection_m8eqEF",
+        "collection_3xkbHq"
+      ],
+      "name": "t:sections.collections.presets.name",
+      "settings": {}
+    },
     "newsletter_qxXgTT": {
       "type": "Newsletter",
       "name": "Newsletter",
@@ -59,6 +82,7 @@
   },
   "order": [
     "hero_banner_pkELXj",
+    "collections_8d7PWy",
     "newsletter_qxXgTT"
   ]
 }

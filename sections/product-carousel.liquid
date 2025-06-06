@@ -1,0 +1,59 @@
+<section class="product-carousel-section">
+  <div class="container">
+    <h2 class="carousel-heading">Featured Products</h2>
+
+    <div class="swiper product-carousel">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide product-card">
+            <a href="{{ block.settings.product.url }}">
+              <img
+                src="{{ block.settings.product.featured_image | image_url: width: 400 }}"
+                alt="{{ block.settings.product.featured_image.alt }}"
+                class="product-image"
+                height=""
+                width=""
+              >
+              <h3 class="product-title">{{ block.settings.product.title }}</h3>
+              <p class="product-price">{{ block.settings.product.price | money }}</p>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .product-carousel-section{
+    padding: 2rem 10rem;
+  }
+{% endstyle %}
+
+
+{% schema %}
+{
+  "name": "t:sections.product-carousel.name",
+  "blocks": [
+    {
+      "type": "product_block",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "label": "Select Product",
+          "id": "product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product-carousel.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -52,7 +52,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 4rem;
-    border-bottom: 1px solid gray;
     position: relative;
     background-color: white;
   }
@@ -80,13 +79,11 @@
     right: 2rem;
   }
 
-  /* Logo image */
   .logo img {
     max-height: 50px;
     width: auto;
   }
 
-  /* Navigation links */
   .nav-links-wrapper {
     flex: 1;
     display: flex;
@@ -118,7 +115,6 @@
     color: #555;
   }
 
-  /* Icons */
   .icons {
     display: flex;
     gap: 15px;
@@ -132,10 +128,8 @@
   .header-container svg {
     height: 20px;
     width: 20px;
-    fill: currentColor;
   }
 
-  /* Nav toggle for mobile */
   .nav-toggle {
     display: none;
     font-size: 28px;
@@ -146,7 +140,6 @@
     transform: translateY(-50%);
   }
 
-  /* Responsive adjustments */
   @media (max-width: 1024px) {
     .header-container {
       padding: 1.5rem 2rem;
@@ -177,7 +170,7 @@
 
 {% schema %}
 {
-  "name": "Header",
+  "name": "t:sections.header.name",
   "settings": [
     {
       "type": "select",
@@ -198,7 +191,7 @@
   ],
   "presets": [
     {
-      "name": "Header"
+      "name": "t:sections.header.presets.name"
     }
   ]
 }

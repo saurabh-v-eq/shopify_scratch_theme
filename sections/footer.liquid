@@ -24,19 +24,25 @@
       {% if section.settings.subheading != blank %}
         <p>{{ section.settings.subheading }}</p>
       {% endif %}
-      <form class="newsletter-form">
-        <input type="email" placeholder="Enter your email" id="newsletter-input">
+      {% form 'customer', class: 'newsletter-form' %}        
+        <input type="email" name="contact[email]" placeholder="Enter your email" id="newsletter-input">
         {% if section.settings.btn_heading != blank %}          
           <button type="submit">{{ section.settings.btn_heading }}</button>
         {% endif %}
-      </form>
+
+        {% if form.posted_successfully? %}
+          <P class="success-message">Thank you for subscribing!</P>
+        {% elsif form.errors %}
+          <P class="error-message">{{ form.errors | default_errors }}</P>
+        {% endif %}
+      {% endform %}
     </div>
   </div>
 </footer>
 
 {% schema %}
 {
-  "name": "Footer",
+  "name": "t:sections.footer.name",
   "settings": [
     {
       "type": "text",
@@ -59,7 +65,7 @@
   ],
   "presets": [
     {
-      "name": "Footer"
+      "name": "t:sections.footer.presets.name"
     }
   ]
 }

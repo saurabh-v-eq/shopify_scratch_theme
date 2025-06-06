@@ -1,0 +1,67 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+    "sections": {
+        "header": {
+            "name": "Header",
+            "presets": {
+                "name" : "Header"
+            }
+        },
+        "hero-banner": {
+            "name": "Hero Banner",
+            "presets": {
+                "name": "Hero Banner"
+            }
+        },
+        "Newsletter": {
+            "name": "Newsletter",
+            "presets": {
+                "name": "Newsletter"
+            }
+        },
+        "main-product": {
+            "name": "Main Product",
+            "presets": {
+                "name": "Main Product"
+            }
+        },
+        "main-cart-items": {
+            "name": "Main Cart Items",
+            "presets": {
+                "name": "Main Cart Items"
+            }
+        },
+        "home-collection": {
+            "name": "Home Collection",
+            "presets": {
+                "name": "Home Collection"
+            }
+        },
+        "footer": {
+            "name": "Footer",
+            "presets": {
+                "name": "Footer"
+            }
+        },
+        "collections": {
+            "name": "Collection List",
+            "presets": {
+                "name": "Collection List"
+            }
+        },
+        "product-carousel": {
+            "name": "Product Carousel",
+            "presets": {
+                "name": "Product Carousel"
+            }
+        }
+    }
+}
