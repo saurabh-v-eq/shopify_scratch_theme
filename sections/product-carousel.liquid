@@ -5,18 +5,20 @@
     <div class="swiper product-carousel">
       <div class="swiper-wrapper">
         {% for block in section.blocks %}
-          <div class="swiper-slide product-card">
-            <a href="{{ block.settings.product.url }}">
-              <img
-                src="{{ block.settings.product.featured_image | image_url: width: 400 }}"
-                alt="{{ block.settings.product.featured_image.alt }}"
-                class="product-image"
-                height=""
-                width=""
-              >
-              <h3 class="product-title">{{ block.settings.product.title }}</h3>
-              <p class="product-price">{{ block.settings.product.price | money }}</p>
-            </a>
+          <div class="swiper-slide">
+            <div class="product-card">
+              <a href="{{ block.settings.product.url }}">
+                <img
+                  src="{{ block.settings.product.featured_image | image_url: width: 400 }}"
+                  alt="{{ block.settings.product.featured_image.alt }}"
+                  class="product-image"
+                  height="300"
+                  width="400"
+                >
+                <h3 class="product-title">{{ block.settings.product.title }}</h3>
+                <p class="product-price">{{ block.settings.product.price | money }}</p>
+              </a>
+            </div>
           </div>
         {% endfor %}
       </div>
@@ -28,11 +30,137 @@
 </section>
 
 {% style %}
-  .product-carousel-section{
+  .product-carousel-section {
     padding: 2rem 10rem;
+    background: #f9f9f9;
+  }
+
+  .product-carousel {
+    height: 400px;
+  }
+
+  .swiper-wrapper {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .product-card {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 1rem;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .product-card a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+
+  .product-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0.5rem 0;
+    flex-shrink: 0;
+  }
+
+  .product-price {
+    font-size: 0.95rem;
+    color: #333;
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #000;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 8px 12px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    background-color: #000;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .product-carousel-section {
+      padding: 1rem;
+    }
+
+    .product-carousel {
+      height: 360px;
+    }
+
+    .product-image {
+      height: 160px;
+    }
+
+    .product-card {
+      padding: 0.75rem;
+    }
   }
 {% endstyle %}
 
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    const swiper = new Swiper('.product-carousel', {
+      spaceBetween: 20,
+      slidesPerView: 3,
+      speed: 500,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+          spaceBetween: 10,
+        },
+        480: {
+          slidesPerView: 2,
+          spaceBetween: 15,
+        },
+        768:{
+          slidesPerView: 3,
+          spaceBetween: 15,
+        }
+      },
+      watchSlidesProgress: true,
+      updateOnWindowResize: true,
+    });
+  });
+{% endjavascript %}
 
 {% schema %}
 {

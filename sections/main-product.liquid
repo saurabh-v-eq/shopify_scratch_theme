@@ -1,5 +1,5 @@
 {{ 'main-product.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ajax-addToCart.js' | asset_url }}" defer></script>
+<script src="{{ 'custom-message.js' | asset_url }}" defer></script>
 <div class="product-detail">
   <div class="product-image">
     {% if product.featured_image != blank %}
@@ -46,6 +46,24 @@
               {% endif %}
             {% endfor %}
           </ul>
+          <div class="product-custom-option">
+            <div class="product-custom-option__checkbox">
+              <label for="custom-checkbox" class="checkbox-label">
+                <input type="checkbox" id="custom-checkbox" class="custom-checkbox">Add Message
+              </label>
+            </div>
+            <div class="product-custom-option__input hidden" id="message">
+              <label for="gift-message-input">Add your message</label>
+              <input
+                type="text"
+                id="custom-input"
+                name="properties[Message]"
+                class="custom-input"
+                Placeholder="Type your message..."
+              >
+            </div>
+            <div id="message-error" class="message-error" style="color: red; font-size: 1.2rem; display: none;"></div>
+          </div>
           {% if section.settings.btn_title != blank %}
             <button type="submit" class="cartButton">{{ section.settings.btn_title }}</button>
           {% endif %}

@@ -22,6 +22,9 @@
                 <P>{{ item.variant.title }}</P>
                 <p>Qty: {{ item.quantity }}</p>
                 <p>{{ item.final_line_price | money }}</p>
+                {% for property in item.properties %}
+                  <p>{{ property.first }}: {{ property.last }}</p>
+                {% endfor %}
               </div>
               <a href="{{ item.url_to_remove }}" class="remove-item-button" data-line="{{ forloop.index }}"
                 ><i class="fa-solid fa-trash"></i

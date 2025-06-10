@@ -17,7 +17,7 @@
           "settings": {
             "image": "shopify://shop_images/banner-img.jpg",
             "heading": "Style That Defines You",
-            "subheading": "Discover the latest trends in fashion.",
+            "subheading": "Discover the latest fashion trends that empower your individuality, combining bold designs with everyday versatility to help you express your true self.",
             "button_text": "Shop Now",
             "button_link": "shopify://collections/all"
           }
@@ -26,8 +26,8 @@
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/banner-img2.jpg",
-            "heading": "Style That Defines You",
-            "subheading": "Discover the latest trends in fashion.",
+            "heading": "Unleash Your Inner Icon",
+            "subheading": "Step into a world of timeless essentials and statement pieces, thoughtfully curated to make every outfit a reflection of your unique personality and confidence.",
             "button_text": "Shop Now",
             "button_link": "shopify://collections/all"
           }
@@ -36,8 +36,8 @@
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/banner-img3.jpg",
-            "heading": "Style That Defines You",
-            "subheading": "Discover the latest trends in fashion.",
+            "heading": "Where Comfort Meets Elegance",
+            "subheading": "Experience a collection crafted for modern living—where relaxed silhouettes, luxurious fabrics, and effortless style come together in perfect harmony.",
             "button_text": "Shop Now",
             "button_link": "shopify://collections/all"
           }
@@ -49,6 +49,71 @@
         "banner_PFWLUG"
       ],
       "name": "Hero Banner",
+      "settings": {}
+    },
+    "product_carousel_8f7bMV": {
+      "type": "product-carousel",
+      "blocks": {
+        "product_block_wktKAE": {
+          "type": "product_block",
+          "settings": {
+            "product": "bedside-table"
+          }
+        },
+        "product_block_FwfnBN": {
+          "type": "product_block",
+          "settings": {
+            "product": "antique-drawers"
+          }
+        },
+        "product_block_Ke48kE": {
+          "type": "product_block",
+          "settings": {
+            "product": "biodegradable-cardboard-pots"
+          }
+        },
+        "product_block_amQE3a": {
+          "type": "product_block",
+          "settings": {
+            "product": "bioglow-creame"
+          }
+        },
+        "product_block_jmDQd9": {
+          "type": "product_block",
+          "settings": {
+            "product": "blue-silk-tuxedo"
+          }
+        },
+        "product_block_VMHdjN": {
+          "type": "product_block",
+          "settings": {
+            "product": "chequered-red-shirt"
+          }
+        },
+        "product_block_xd9Emy": {
+          "type": "product_block",
+          "settings": {
+            "product": "classic-varsity-top"
+          }
+        },
+        "product_block_gENENC": {
+          "type": "product_block",
+          "settings": {
+            "product": "dark-denim-top"
+          }
+        }
+      },
+      "block_order": [
+        "product_block_wktKAE",
+        "product_block_FwfnBN",
+        "product_block_Ke48kE",
+        "product_block_amQE3a",
+        "product_block_jmDQd9",
+        "product_block_VMHdjN",
+        "product_block_xd9Emy",
+        "product_block_gENENC"
+      ],
+      "name": "t:sections.product-carousel.presets.name",
       "settings": {}
     },
     "collections_8d7PWy": {
@@ -72,7 +137,9 @@
         "collection_3xkbHq"
       ],
       "name": "t:sections.collections.presets.name",
-      "settings": {}
+      "settings": {
+        "heading": "Shop Collections"
+      }
     },
     "newsletter_qxXgTT": {
       "type": "Newsletter",
@@ -82,6 +149,7 @@
   },
   "order": [
     "hero_banner_pkELXj",
+    "product_carousel_8f7bMV",
     "collections_8d7PWy",
     "newsletter_qxXgTT"
   ]
