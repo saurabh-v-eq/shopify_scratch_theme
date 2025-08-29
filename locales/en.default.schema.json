@@ -62,6 +62,12 @@
             "presets": {
                 "name": "Product Carousel"
             }
+        },
+        "product-recommendation": {
+            "name": "product Recommendations",
+            "presets": {
+                "name": "Product Recommendations"
+            }
         }
     }
 }

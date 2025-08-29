@@ -131,6 +131,54 @@
   color: rgb(46, 31, 31);
 }
 
+dd{
+  margin: 0;
+}
+
+.image-popup-modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.image-popup-modal.hidden{
+  display: none;
+}
+
+.image-popup-content{
+  max-height: 60%;
+  max-width: 60%;
+  padding: 25px;
+  background-color: #fff;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-popup-content .image-popup-close{
+  position: absolute;
+  top: -2;
+  right: 0;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.popup-image{
+  max-height: 50vh;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
 @media (max-width: 500px) {
   .cart-drawer {
     max-width: 100%;

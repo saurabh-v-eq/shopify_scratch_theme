@@ -5,12 +5,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageError = document.getElementById('message-error');
     const productForm = document.querySelector('form');
 
+    messageInput.disabled = !checkBox.checked;
+
     checkBox.addEventListener('change', () => {
         if(checkBox.checked){
             messageInputWrapper.classList.remove('hidden');
+            messageInput.disabled = false;
         }else{
             messageInputWrapper.classList.add('hidden');
             messageInput.value = '';
+            messageInput.disabled = true;
             messageError.style.display = 'none';
             messageError.textContent = '';
         }

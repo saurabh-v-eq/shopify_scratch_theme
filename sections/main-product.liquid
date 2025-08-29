@@ -1,4 +1,5 @@
 {{ 'main-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'image-cropper.js' | asset_url }}" defer></script>
 <script src="{{ 'custom-message.js' | asset_url }}" defer></script>
 <div class="product-detail">
   <div class="product-image">
@@ -64,6 +65,39 @@
             </div>
             <div id="message-error" class="message-error" style="color: red; font-size: 1.2rem; display: none;"></div>
           </div>
+          <div class="image-upload-custom">
+            <label for="custom-image-upload">Upload Image</label>
+            <input type="file" name="properties[Uploaded Image]" id="custom-image-upload" accept="image/*">
+          </div>
+          <div id="cropper-modal" class="hidden">
+            <div class="modal-inner">
+              <div class="modal-body">
+                <div class="image-wrapper">
+                  <img id="image-to-crop" src="" height="" width="" />
+                </div>
+                <div class="preview-wrapper">
+                  <label>Live Preview</label>
+                  <canvas id="live-preview-canvas"></canvas>
+                </div>
+              </div>
+
+              <div class="cropper-controls">
+                <div class="text-input">
+                  <label for="image-text">Add Text: </label>
+                  <input type="text" id="image-text" placeholder="Enter text for image" />
+                </div>
+                <div class="cropper-buttons">
+                  <button type="button" id="rotate-left">⟲ Rotate Left</button>
+                  <button type="button" id="rotate-right">⟳ Rotate Right</button>
+                  <button type="button" id="crop-image">Crop</button>
+                  <button type="button" id="save-image">Save</button>
+                  <button type="button" id="cancel">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- This will go into cart -->
+          <input type="hidden" name="properties[Cropped Image]" id="cropped-image-url">
           {% if section.settings.btn_title != blank %}
             <button type="submit" class="cartButton">{{ section.settings.btn_title }}</button>
           {% endif %}

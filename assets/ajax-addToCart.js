@@ -1,19 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const addToCartForms = document.querySelectorAll('form[action="/cart/add"]');
+  const loadMoreBtn = document.getElementById("load-more");
+  const productGrid = document.getElementById("product-grid");
   const cartOverlay = document.getElementById("cart-drawer-overlay");
   const cartDrawer = document.getElementById("cart-drawer");
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
+  /* ---------------- CART DRAWER ---------------- */
   const closeCartDrawer = () => {
     cartDrawer.classList.remove("open");
     cartOverlay.classList.remove("active");
   };
 
-  document.getElementById("cart-drawer-close")?.addEventListener("click", closeCartDrawer);
   cartOverlay?.addEventListener("click", closeCartDrawer);
 
   const openCartDrawer = () => {
     cartDrawer.classList.add("open");
     cartOverlay.classList.add("active");
+  };
+
+  const attachCloseBtnEvent = () => {
+    const newCloseBtn = cartDrawer.querySelector("#cart-drawer-close");
+    if (newCloseBtn && !newCloseBtn.dataset.ajaxified) {
+      newCloseBtn.dataset.ajaxified = true;
+      newCloseBtn.addEventListener("click", closeCartDrawer);
+    }
   };
 
   const updateCartDrawerHTML = async () => {
@@ -29,7 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (newDrawer) {
         cartDrawer.innerHTML = newDrawer.innerHTML;
         openCartDrawer();
+
+        // rebind events
         attachRemoveBtnEvents();
+        attachCloseBtnEvent();
       }
     } catch (error) {
       console.error("Error updating cart drawer:", error);
@@ -39,6 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const attachRemoveBtnEvents = () => {
     const removeBtns = document.querySelectorAll(".remove-item-button");
     removeBtns.forEach((btn) => {
+      if (btn.dataset.ajaxified) return; // avoid duplicate
+      btn.dataset.ajaxified = true;
+
       btn.addEventListener("click", async (event) => {
         event.preventDefault();
 
@@ -64,24 +80,109 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  addToCartForms.forEach((form) => {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+  /* ---------------- ADD TO CART ---------------- */
+  const attachAddToCartEvents = () => {
+    const addToCartForms = document.querySelectorAll('form[action="/cart/add"]');
+    addToCartForms.forEach((form) => {
+      if (form.dataset.ajaxified) return; // avoid duplicate
+      form.dataset.ajaxified = true;
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        try {
+          await fetch("/cart/add.js", {
+            method: "POST",
+            body: new FormData(form),
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          await updateCartDrawerHTML();
+        } catch (error) {
+          console.error("Error adding item to cart:", error);
+        }
+      });
+    });
+  };
+
+  /* ---------------- LOAD MORE ---------------- */
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", async () => {
+      const nextUrl = loadMoreBtn.getAttribute("data-next-url");
+      if (!nextUrl) return;
+
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.textContent = "Loading...";
+
       try {
-        await fetch("/cart/add.js", {
-          method: "POST",
-          body: new FormData(form),
-          headers: {
-            Accept: "application/json",
-          },
+        const response = await fetch(nextUrl);
+        if (!response.ok) throw new Error("Network response was not ok");
+        const text = await response.text();
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, "text/html");
+
+        const newProducts = doc.querySelectorAll("#product-grid .product-card");
+
+        newProducts.forEach((product) => {
+          productGrid.appendChild(product);
         });
 
-        await updateCartDrawerHTML();
+        // re-bind AJAX events for new elements
+        attachAddToCartEvents();
+        callWishlist();
+
+        const newLoadMoreBtn = doc.querySelector("#load-more");
+
+        if (newLoadMoreBtn) {
+          loadMoreBtn.setAttribute(
+            "data-next-url",
+            newLoadMoreBtn.getAttribute("data-next-url")
+          );
+          loadMoreBtn.disabled = false;
+          loadMoreBtn.textContent = "Load More";
+        } else {
+          loadMoreBtn.remove();
+        }
       } catch (error) {
-        console.error("Error adding item to cart:", error);
+        console.error(error);
+        loadMoreBtn.disabled = false;
+        loadMoreBtn.textContent = "Load More";
       }
     });
-  });
+  }
 
+  /* ---------------- WISHLIST ---------------- */
+  const callWishlist = () => {
+    const wishlistBtns = document.querySelectorAll(".wishlist-btn");
+
+    wishlistBtns.forEach((btn) => {
+      if (btn.dataset.ajaxified) return;
+      btn.dataset.ajaxified = true;
+
+      const handle = btn.dataset.productHandle;
+      if (wishlist.includes(handle)) {
+        btn.classList.add("active");
+      }
+
+      btn.addEventListener("click", () => {
+        if (wishlist.includes(handle)) {
+          wishlist = wishlist.filter((item) => item !== handle);
+          btn.classList.remove("active");
+        } else {
+          wishlist.push(handle);
+          btn.classList.add("active");
+        }
+
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      });
+    });
+  };
+
+  /* ---------------- INIT ---------------- */
+  attachAddToCartEvents();
   attachRemoveBtnEvents();
+  attachCloseBtnEvent();
+  callWishlist();
 });

@@ -8,6 +8,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     >
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 
     {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
     {{ content_for_header }}
@@ -42,5 +43,7 @@
     {% sections 'footer-group' %}
     <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'ajax-addToCart.js' | asset_url }}" defer></script>
+    <script src="{{ 'image-popup.js' | asset_url }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js" defer></script>
   </body>
 </html>

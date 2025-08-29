@@ -1,0 +1,144 @@
+<div class="wishlist-container">
+  <h1>Your Wishlist</h1>
+  <div id="wishlist-products"></div>
+</div>
+
+<style>
+    .wishlist-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    }
+
+    .wishlist-container h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #222;
+    letter-spacing: -0.5px;
+    }
+
+    #wishlist-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    }
+
+    .wishlist-item {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+
+    .wishlist-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .wishlist-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 1px solid #f0f0f0;
+    }
+
+    .wishlist-item h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #111;
+    margin: 16px 12px 8px;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+    }
+
+    .wishlist-item a:hover h3 {
+    color: #006fbb; /* Shopify blue accent */
+    }
+
+    .wishlist-item p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0 12px 12px;
+    }
+
+    .wishlist-actions {
+    margin-top: auto;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    }
+
+    .wishlist-item button {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    }
+
+    .wishlist-item button.remove-wishlist {
+    background: #fff0f0;
+    border: 1px solid #f28b82;
+    color: #d93025;
+    }
+
+    .wishlist-item button.remove-wishlist:hover {
+    background: #d93025;
+    color: #fff;
+    }
+
+    .wishlist-item button.add-to-cart {
+    background: #006fbb;
+    color: #fff;
+    }
+
+    .wishlist-item button.add-to-cart:hover {
+    background: #004c8c;
+    }
+
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const container = document.getElementById("wishlist-products");
+
+    if (wishlist.length === 0) {
+      container.innerHTML = "<p>No products in wishlist.</p>";
+      return;
+    }
+
+    for (let handle of wishlist) {
+      const res = await fetch(`/products/${handle}.js`);
+      const product = await res.json();
+
+      container.innerHTML += `
+        <div class="wishlist-item">
+          <a href="/products/${product.handle}">
+            <img src="${product.images[0]}" width="120" />
+            <h3>${product.title}</h3>
+          </a>
+          <p>${(product.price / 100).toFixed(2)} ${Shopify.currency.active}</p>
+        </div>
+      `;
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Wishlist Section",
+  "settings": []
+}
+{% endschema %}

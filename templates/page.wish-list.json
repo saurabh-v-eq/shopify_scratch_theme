@@ -10,20 +10,9 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
-      "settings": {
-        "variant_label": "Select Variants:",
-        "btn_title": "Add to Cart"
-      }
-    },
-    "product_recommendation_QjLKAt": {
-      "type": "product-recommendation",
-      "name": "t:sections.product-recommendation.presets.name",
+      "type": "main-wishlist",
       "settings": {}
     }
   },
-  "order": [
-    "main",
-    "product_recommendation_QjLKAt"
-  ]
+  "order": ["main"]
 }

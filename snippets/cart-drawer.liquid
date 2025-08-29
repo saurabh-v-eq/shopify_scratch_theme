@@ -23,7 +23,16 @@
                 <p>Qty: {{ item.quantity }}</p>
                 <p>{{ item.final_line_price | money }}</p>
                 {% for property in item.properties %}
-                  <p>{{ property.first }}: {{ property.last }}</p>
+                  <div class="line-item-property">
+                    <dt>{{ property.first }}:</dt>
+                    <dd>
+                      {% if property.last contains '/uploads/' %}
+                        <a href="{{ property.last }}" class="image-preview-link" data-image-url="{{ property.last }}" target="_blank">{{ property.last | split: '/' | last }}</a>
+                      {% else %} 
+                        {{ property.last }}
+                      {% endif %}
+                    </dd>
+                  </div>
                 {% endfor %}
               </div>
               <a href="{{ item.url_to_remove }}" class="remove-item-button" data-line="{{ forloop.index }}"
@@ -49,6 +58,12 @@
         <a href="/checkout" class="checkout-button">Checkout</a>
       </div>
     {% endif %}
+  </div>
+</div>
+<div class="image-popup-modal hidden" id="image-popup-modal">
+  <div class="image-popup-content">
+    <button id="image-popup-close" class="image-popup-close">&times;</button> 
+    <img src="" id="popup-image" class="popup-image" height="" width=""> 
   </div>
 </div>
 
