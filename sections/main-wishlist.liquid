@@ -110,30 +110,48 @@
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    const container = document.getElementById("wishlist-products");
+document.addEventListener("DOMContentLoaded", async () => {
+  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  const container = document.getElementById("wishlist-products");
 
-    if (wishlist.length === 0) {
-      container.innerHTML = "<p>No products in wishlist.</p>";
-      return;
-    }
+  if (wishlist.length === 0) {
+    container.innerHTML = "<p>No products in wishlist.</p>";
+    return;
+  }
 
-    for (let handle of wishlist) {
-      const res = await fetch(`/products/${handle}.js`);
-      const product = await res.json();
+  try {
+    // Fire all requests in parallel
+    const productRequests = wishlist.map(handle =>
+      fetch(`/products/${handle}.js`).then(res => res.json())
+    );
+    console.log('productRequests', productRequests);
 
-      container.innerHTML += `
-        <div class="wishlist-item">
-          <a href="/products/${product.handle}">
-            <img src="${product.images[0]}" width="120" />
-            <h3>${product.title}</h3>
-          </a>
-          <p>${(product.price / 100).toFixed(2)} ${Shopify.currency.active}</p>
-        </div>
-      `;
-    }
-  });
+    const products = await Promise.all(productRequests);
+
+    // Render once after all are fetched
+    container.innerHTML = products.map(product => `
+      <div class="wishlist-item">
+        <a href="/products/${product.handle}">
+          <img src="${product.images[0]}" width="120" />
+          <h3>${product.title}</h3>
+        </a>
+        <p>${(product.price / 100).toFixed(2)} ${Shopify.currency.active}</p>
+        {% comment %} <div class="wishlist-actions">
+          <button class="add-to-cart" data-variant="${product.variants[0].id}">
+            Add to Cart
+          </button>
+          <button class="remove-wishlist" data-handle="${product.handle}">
+            Remove
+          </button>
+        </div> {% endcomment %}
+      </div>
+    `).join("");
+  } catch (err) {
+    console.error("Error fetching wishlist products:", err);
+    container.innerHTML = "<p>Failed to load wishlist.</p>";
+  }
+});
+
 </script>
 
 {% schema %}
