@@ -83,19 +83,51 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ---------------- ADD TO CART ---------------- */
   const attachAddToCartEvents = () => {
     const addToCartForms = document.querySelectorAll('form[action="/cart/add"]');
+
     addToCartForms.forEach((form) => {
-      if (form.dataset.ajaxified) return; // avoid duplicate
+      if (form.dataset.ajaxified) return; // avoid duplicate binding
       form.dataset.ajaxified = true;
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
+
         try {
+          const formData = new FormData(form);
+          const mainVariantId = formData.get("id");
+          const quantity = formData.get("quantity") || 1;
+
+          // collect line item properties (message, upload, cropped image)
+          const properties = Object.fromEntries(
+            [...formData].filter(([key]) => key.startsWith("properties["))
+          );
+
+          // collect add-ons
+          const addonCheckboxes = form.querySelectorAll(".addon-checkbox:checked");
+          const items = [
+            {
+              id: mainVariantId,
+              quantity: Number(quantity),
+              properties,
+            },
+          ];
+
+          addonCheckboxes.forEach((cb) => {
+            items.push({
+              id: cb.dataset.variantId,
+              quantity: 1,
+            });
+          });
+
+          console.log('items', items);
+
+          // add to cart
           await fetch("/cart/add.js", {
             method: "POST",
-            body: new FormData(form),
             headers: {
+              "Content-Type": "application/json",
               Accept: "application/json",
             },
+            body: JSON.stringify({ items }),
           });
 
           await updateCartDrawerHTML();

@@ -17,40 +17,46 @@
     {% if product.title != blank %}
       <h1 class="product-title">{{ product.title | escape | upcase }}</h1>
     {% endif %}
+
     {% if product.description != blank %}
       <p class="product-des">{{ product.description }}</p>
     {% endif %}
+
     {% if product.price != blank %}
       <p class="product-price">{{ product.price | money }}</p>
     {% endif %}
+
     <div class="variant-info">
       {% if product.variants.size > 1 %}
         <form method="post" action="{{ routes.cart_add_url }}">
           {% if section.settings.variant_label != blank %}
             <p class="variant-select">{{ section.settings.variant_label }}</p>
           {% endif %}
+
+          <!-- === Variants === -->
           <ul class="variant-list">
             {% for variant in product.variants %}
-              {% if variant.title != blank %}
-                <li class="variant-item">
-                  <input
-                    type="radio"
-                    name="id"
-                    value="{{ variant.id }}"
-                    id="variant-{{ variant.id }}"
-                    {% if forloop.first %}
-                      checked
-                    {% endif %}
-                  >
-                  <label for="variant-{{ variant.id }}">{{ variant.title }}</label>
-                </li>
-              {% endif %}
+              <li class="variant-item">
+                <input
+                  type="radio"
+                  name="id"
+                  value="{{ variant.id }}"
+                  id="variant-{{ variant.id }}"
+                  {% if forloop.first %}
+                    checked
+                  {% endif %}
+                >
+                <label for="variant-{{ variant.id }}">{{ variant.title }}</label>
+              </li>
             {% endfor %}
           </ul>
+
+          <!-- === Custom options (message, upload) === -->
           <div class="product-custom-option">
             <div class="product-custom-option__checkbox">
               <label for="custom-checkbox" class="checkbox-label">
-                <input type="checkbox" id="custom-checkbox" class="custom-checkbox">Add Message
+                <input type="checkbox" id="custom-checkbox" class="custom-checkbox">
+                Add Message
               </label>
             </div>
             <div class="product-custom-option__input hidden" id="message">
@@ -60,49 +66,59 @@
                 id="custom-input"
                 name="properties[Message]"
                 class="custom-input"
-                Placeholder="Type your message..."
+                placeholder="Type your message..."
               >
             </div>
-            <div id="message-error" class="message-error" style="color: red; font-size: 1.2rem; display: none;"></div>
+            <div id="message-error" class="message-error" style="color:red; font-size:1.2rem; display:none;"></div>
           </div>
+
+          <!-- === Image Upload with Cropper === -->
           <div class="image-upload-custom">
             <label for="custom-image-upload">Upload Image</label>
             <input type="file" name="properties[Uploaded Image]" id="custom-image-upload" accept="image/*">
           </div>
           <div id="cropper-modal" class="hidden">
-            <div class="modal-inner">
-              <div class="modal-body">
-                <div class="image-wrapper">
-                  <img id="image-to-crop" src="" height="" width="" />
-                </div>
-                <div class="preview-wrapper">
-                  <label>Live Preview</label>
-                  <canvas id="live-preview-canvas"></canvas>
-                </div>
-              </div>
-
-              <div class="cropper-controls">
-                <div class="text-input">
-                  <label for="image-text">Add Text: </label>
-                  <input type="text" id="image-text" placeholder="Enter text for image" />
-                </div>
-                <div class="cropper-buttons">
-                  <button type="button" id="rotate-left">⟲ Rotate Left</button>
-                  <button type="button" id="rotate-right">⟳ Rotate Right</button>
-                  <button type="button" id="crop-image">Crop</button>
-                  <button type="button" id="save-image">Save</button>
-                  <button type="button" id="cancel">Cancel</button>
-                </div>
-              </div>
-            </div>
           </div>
-          <!-- This will go into cart -->
           <input type="hidden" name="properties[Cropped Image]" id="cropped-image-url">
+
+          <!-- === ADD-ON PRODUCTS SECTION === -->
+          {% if product.metafields.custom.add_on_products != blank %}
+            <div class="addon-products">
+              <h3 class="addon-title">People also bought</h3>
+              <ul class="addon-list">
+                {% for addon_product in product.metafields.custom.add_on_products.value %}
+                  <li class="addon-item">
+                    <div class="addon-info">
+                      {% if addon_product.featured_image %}
+                        <img
+                          src="{{ addon_product.featured_image | image_url: width: 100 }}"
+                          alt="{{ addon_product.title }}"
+                          class="addon-image"
+                          height=""
+                          width=""
+                        >
+                      {% endif %}
+                      <span class="addon-name">{{ addon_product.title }}</span>
+                      <span class="addon-price">{{ addon_product.price | money }}</span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      class="addon-checkbox"
+                      data-variant-id="{{ addon_product.variants.first.id }}"
+                    >
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <!-- === Add to Cart === -->
           {% if section.settings.btn_title != blank %}
             <button type="submit" class="cartButton">{{ section.settings.btn_title }}</button>
           {% endif %}
         </form>
       {% else %}
+        <!-- Simple add to cart when only 1 variant -->
         <form method="post" action="{{ routes.cart_add_url }}">
           <input type="hidden" name="id" value="{{ product.variants.first.id }}">
           {% if section.settings.btn_title != blank %}

@@ -21,6 +21,29 @@
     </ul>
   </div>
   <div class="icons">
+    <div class="search-bar">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+        <input 
+          type="search" 
+          name="q" 
+          id="SearchInput" 
+          placeholder="Search products..." 
+          autocomplete="off"
+          aria-label="Search"
+        >
+        <button type="submit" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path d="M505 442.7l-99.7-99.7C429.5 304.3 448 263.1 448 216 448 
+              97 351 0 232 0S16 97 16 216s97 216 216 216c47.1 0 88.3-18.5 
+              127-42.7l99.7 99.7c9.4 9.4 24.6 9.4 33.9 
+              0l12.4-12.4c9.5-9.4 9.5-24.6.1-34zM232 
+              368c-83.8 0-152-68.2-152-152S148.2 
+              64 232 64s152 68.2 152 152-68.2 152-152 152z"/>
+          </svg>
+        </button>
+      </form>
+      <div id="predictive-search-results" class="predictive-results"></div>
+    </div>
     <div class="user-icon">
       <a href="{{ routes.account_url }}">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -118,6 +141,7 @@
   .icons {
     display: flex;
     gap: 15px;
+    align-items: center;
   }
 
   .user-icon,
@@ -165,7 +189,156 @@
       padding: 1rem;
     }
   }
+
+  .search-bar {
+    position: relative;
+  }
+
+  .search-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0px;
+  }
+
+  .search-form input {
+    padding: 8px 28px 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    width: 300px;
+    position: relative;
+  }
+
+  .search-form button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+  }
+
+  .predictive-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    display: none;
+    z-index: 50;
+    box-sizing: border-box;
+  }
+
+  .predictive-results h4 {
+    margin: 5px 0;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .predictive-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .predictive-results li {
+    padding: 6px 0;
+  }
+
+  .predictive-results a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .predictive-results a:hover {
+    color: #0073e6;
+  }
+
 {% endstyle %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const searchInput = document.getElementById("SearchInput");
+  const resultsContainer = document.getElementById("predictive-search-results");
+
+  let debounceTimer;
+
+  searchInput.addEventListener("input", function () {
+    const query = this.value.trim();
+    clearTimeout(debounceTimer);
+
+    if (query.length < 2) {
+      resultsContainer.innerHTML = "";
+      resultsContainer.style.display = "none";
+      return;
+    }
+
+    debounceTimer = setTimeout(() => {
+      fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,collection,article,page`)
+        .then(response => response.json())
+        .then(data => {
+          // Clear old results
+          resultsContainer.innerHTML = "";
+
+          // PRODUCTS
+          if (data.resources.results.products.length > 0) {
+            const productsTitle = document.createElement("h4");
+            productsTitle.textContent = "Products";
+            resultsContainer.appendChild(productsTitle);
+
+            const ul = document.createElement("ul");
+
+            data.resources.results.products.forEach(product => {
+              const li = document.createElement("li");
+
+              li.innerHTML = `
+                <a href="${product.url}">
+                  <img src="${product.image}" alt="${product.title}" width="40" height="40">
+                  <h4>${product.title}</h4>
+                  <p>${product.price}</p>
+                </a>
+              `;
+
+              ul.appendChild(li);
+            });
+
+            resultsContainer.appendChild(ul);
+          }
+
+          // COLLECTIONS
+          if (data.resources.results.collections.length > 0) {
+            const collectionsTitle = document.createElement("h4");
+            collectionsTitle.textContent = "Collections";
+            resultsContainer.appendChild(collectionsTitle);
+
+            const ul = document.createElement("ul");
+
+            data.resources.results.collections.forEach(collection => {
+              const li = document.createElement("li");
+              li.innerHTML = `<a href="${collection.url}">${collection.title}</a>`;
+              ul.appendChild(li);
+            });
+
+            resultsContainer.appendChild(ul);
+          }
+
+          resultsContainer.style.display = "block";
+        })
+        .catch(err => {
+          console.error("Predictive search error:", err);
+        });
+    }, 300); // debounce 300ms
+  });
+});
+</script>
 
 
 {% schema %}

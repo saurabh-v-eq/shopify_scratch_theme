@@ -16,14 +16,28 @@
         "btn_title": "Add to Cart"
       }
     },
-    "product_recommendation_QjLKAt": {
-      "type": "product-recommendation",
+    "1756710813fdb8c406": {
+      "type": "apps",
+      "blocks": {
+        "selleasy_lb_upsell_widget_pal_HYp6b7": {
+          "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pal/790c1a03-a71f-4bc1-9869-00dad526d3c2",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "selleasy_lb_upsell_widget_pal_HYp6b7"
+      ],
+      "settings": {}
+    },
+    "product_recommendations_6MYP8m": {
+      "type": "product-recommendations",
       "name": "t:sections.product-recommendation.presets.name",
       "settings": {}
     }
   },
   "order": [
     "main",
-    "product_recommendation_QjLKAt"
+    "1756710813fdb8c406",
+    "product_recommendations_6MYP8m"
   ]
 }
