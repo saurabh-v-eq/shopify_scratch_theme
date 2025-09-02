@@ -164,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // re-bind AJAX events for new elements
         attachAddToCartEvents();
         callWishlist();
+        updateRatingStars();
 
         const newLoadMoreBtn = doc.querySelector("#load-more");
 
@@ -212,9 +213,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  function updateRatingStars() {
+    if(document.querySelectorAll('.stars-fill').length > 0) {
+      document.querySelectorAll('.stars-fill').forEach(el => {
+        console.log(el);
+        const rating = parseFloat(el.dataset.rating) || 0;
+        const percentage = (rating / 5) * 100;
+        el.style.width = `${percentage}%`
+      })
+    }
+  }
+
   /* ---------------- INIT ---------------- */
   attachAddToCartEvents();
   attachRemoveBtnEvents();
   attachCloseBtnEvent();
   callWishlist();
+  updateRatingStars();
 });

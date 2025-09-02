@@ -15,6 +15,7 @@
   {% if product.title != blank %}
     <h4>{{ product.title | capitalize }}</h4>
   {% endif %}
+
   {% if product.price != blank %}
     <p>{{ product.price | money_with_currency }}</p>
   {% endif %}
@@ -40,7 +41,18 @@
       </svg>
     </button>
   </div>
+    <!-- Ratings Metafield -->
+  {% if product.metafields.custom.rating != blank %}    
+    <div class="rating-block">
+      <div class="star-rating">
+        <div class="star-outer"></div>
+        <div class="star-inner stars-fill" data-rating="{{ product.metafields.custom.rating.value }}"></div>
+      </div>
+      <div>{{ product.metafields.custom.rating }}</div>
+    </div>
+  {% endif %}
 </div>
+
 
 <style>
 .product-actions {
@@ -93,5 +105,36 @@
   fill: #e53935;
 }
 
-</style>
+.rating-block{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.4rem;
+}
 
+.star-rating {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
+.star-outer {
+  color: #ccc; /* grey for unfilled stars */
+}
+
+.star-inner { 
+  color: #f8ce0b;  /* gold for filled stars */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.star-outer::before,
+.star-inner::before {
+  content: '★★★★★';
+}
+
+</style>

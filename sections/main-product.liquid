@@ -27,7 +27,6 @@
     {% endif %}
 
     <div class="variant-info">
-      {% if product.variants.size > 1 %}
         <form method="post" action="{{ routes.cart_add_url }}">
           {% if section.settings.variant_label != blank %}
             <p class="variant-select">{{ section.settings.variant_label }}</p>
@@ -117,15 +116,6 @@
             <button type="submit" class="cartButton">{{ section.settings.btn_title }}</button>
           {% endif %}
         </form>
-      {% else %}
-        <!-- Simple add to cart when only 1 variant -->
-        <form method="post" action="{{ routes.cart_add_url }}">
-          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-          {% if section.settings.btn_title != blank %}
-            <button type="submit" class="cartButton">{{ section.settings.btn_title }}</button>
-          {% endif %}
-        </form>
-      {% endif %}
     </div>
   </div>
 </div>
