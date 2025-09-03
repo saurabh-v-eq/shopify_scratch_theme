@@ -14,17 +14,22 @@
     {{ content_for_header }}
 
     {% style %}
-      html {
-        box-sizing: border-box;
-        font-size: 12px;
+      html, body {
         height: 100%;
+        margin: 0;
+        font-size: 12px;
       }
 
       body {
-        min-height: 100%;
-        margin: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
         font-size: 1.5rem;
         letter-spacing: 0.06rem;
+      }
+
+      main {
+        flex: 1;
       }
 
       .no-scroll {
@@ -35,7 +40,12 @@
       a {
         text-decoration: none;
       }
+
+      #searchresults {
+        text-align: center;
+      }
     {% endstyle %}
+
   </head>
   <body>
     {% if settings.cart_type == 'drawer' %}
@@ -43,11 +53,17 @@
     {% endif %}
 
     {% sections 'header-group' %}
-    {{ content_for_layout }}
+
+    <main>
+      {{ content_for_layout }}
+    </main>
+
     {% sections 'footer-group' %}
+
     <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'ajax-addToCart.js' | asset_url }}" defer></script>
     <script src="{{ 'image-popup.js' | asset_url }}" defer></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js" defer></script>
   </body>
 </html>

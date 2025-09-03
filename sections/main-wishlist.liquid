@@ -1,6 +1,15 @@
 <div class="wishlist-container">
   <h1>Your Wishlist</h1>
-  <div id="wishlist-products"></div>
+  {% if customer %}
+    <div id="wishlist-products"></div>
+  {% else %}
+    <div style="text-align: center; margin-bottom: 15px;">Login to see wishlist items</div>
+    <div style="text-align: center;">
+      <a href="{{ routes.account_url }}" style="text-align: center; padding: 10px; background-color: black; color: #ffff;">
+        Login
+      </a>
+    </div>
+  {% endif %}
 </div>
 
 <style>
@@ -14,7 +23,6 @@
     font-size: 2.25rem;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 40px;
     color: #222;
     letter-spacing: -0.5px;
     }
@@ -108,51 +116,52 @@
     }
 
 </style>
-
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  const container = document.getElementById("wishlist-products");
-
-  if (wishlist.length === 0) {
-    container.innerHTML = "<p>No products in wishlist.</p>";
-    return;
-  }
-
-  try {
-    // Fire all requests in parallel
-    const productRequests = wishlist.map(handle =>
-      fetch(`/products/${handle}.js`).then(res => res.json())
-    );
-    console.log('productRequests', productRequests);
-
-    const products = await Promise.all(productRequests);
-
-    // Render once after all are fetched
-    container.innerHTML = products.map(product => `
-      <div class="wishlist-item">
-        <a href="/products/${product.handle}">
-          <img src="${product.images[0]}" width="120" />
-          <h3>${product.title}</h3>
-        </a>
-        <p>${(product.price / 100).toFixed(2)} ${Shopify.currency.active}</p>
-        {% comment %} <div class="wishlist-actions">
-          <button class="add-to-cart" data-variant="${product.variants[0].id}">
-            Add to Cart
-          </button>
-          <button class="remove-wishlist" data-handle="${product.handle}">
-            Remove
-          </button>
-        </div> {% endcomment %}
-      </div>
-    `).join("");
-  } catch (err) {
-    console.error("Error fetching wishlist products:", err);
-    container.innerHTML = "<p>Failed to load wishlist.</p>";
-  }
-});
-
-</script>
+{% if customer %}
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const container = document.getElementById("wishlist-products");
+  
+    if (wishlist.length === 0) {
+      container.innerHTML = "<p>No products in wishlist.</p>";
+      return;
+    }
+  
+    try {
+      // Fire all requests in parallel
+      const productRequests = wishlist.map(handle =>
+        fetch(`/products/${handle}.js`).then(res => res.json())
+      );
+      console.log('productRequests', productRequests);
+  
+      const products = await Promise.all(productRequests);
+  
+      // Render once after all are fetched
+      container.innerHTML = products.map(product => `
+        <div class="wishlist-item">
+          <a href="/products/${product.handle}">
+            <img src="${product.images[0]}" width="120" />
+            <h3>${product.title}</h3>
+          </a>
+          <p>${(product.price / 100).toFixed(2)} ${Shopify.currency.active}</p>
+          {% comment %} <div class="wishlist-actions">
+            <button class="add-to-cart" data-variant="${product.variants[0].id}">
+              Add to Cart
+            </button>
+            <button class="remove-wishlist" data-handle="${product.handle}">
+              Remove
+            </button>
+          </div> {% endcomment %}
+        </div>
+      `).join("");
+    } catch (err) {
+      console.error("Error fetching wishlist products:", err);
+      container.innerHTML = "<p>Failed to load wishlist.</p>";
+    }
+  });
+  
+  </script>
+{% endif %}
 
 {% schema %}
 {
