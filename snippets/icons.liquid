@@ -1,0 +1,56 @@
+{% case icon %}
+    {% when 'filter-icon' %}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          width="20px"
+          height="20px"
+          viewBox="0 0 24 24"
+          version="1.1"
+        >
+          <title>Filter</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Filter">
+                  <rect id="Rectangle" fill-rule="nonzero" x="0" y="0" width="24" height="24"></rect>
+                  <line x1="4" y1="5" x2="16" y2="5" id="Path" stroke="#0C0310" stroke-width="2" stroke-linecap="round"></line>
+                  <line x1="4" y1="12" x2="10" y2="12" id="Path" stroke="#0C0310" stroke-width="2" stroke-linecap="round"></line>
+                  <line x1="14" y1="12" x2="20" y2="12" id="Path" stroke="#0C0310" stroke-width="2" stroke-linecap="round"></line>
+                  <line x1="8" y1="19" x2="20" y2="19" id="Path" stroke="#0C0310" stroke-width="2" stroke-linecap="round"></line>
+                  <circle id="Oval" stroke="#0C0310" stroke-width="2" stroke-linecap="round" cx="18" cy="5" r="2"></circle>
+                  <circle id="Oval" stroke="#0C0310" stroke-width="2" stroke-linecap="round" cx="12" cy="12" r="2"></circle>
+                  <circle id="Oval" stroke="#0C0310" stroke-width="2" stroke-linecap="round" cx="6" cy="19" r="2"></circle>
+              </g>
+          </g>
+        </svg>
+
+    {% when 'wishlist' %}
+        <svg class="wishlist-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                    2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09 
+                    C13.09 3.81 14.76 3 16.5 3 
+                    19.58 3 22 5.42 22 8.5 
+                    c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+
+    {% when 'search' %}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path d="M505 442.7l-99.7-99.7C429.5 304.3 448 263.1 448 216 
+            448 97 351 0 232 0S16 97 16 216s97 216 216 216c47.1 0 
+            88.3-18.5 127-42.7l99.7 99.7c9.4 9.4 24.6 9.4 33.9 
+            0l12.4-12.4c9.5-9.4 9.5-24.6.1-34zM232 
+            368c-83.8 0-152-68.2-152-152S148.2 
+            64 232 64s152 68.2 152 152-68.2 152-152 152z"/>
+        </svg>
+
+    {% when 'user' %}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+          <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"/>
+        </svg>
+
+    {% when 'cart' %}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+            <path d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32l411 0c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3l-288.5 0 5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5L488 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-288.3 0c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5L24 48C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
+        </svg>
+    {% else %}
+        
+{% endcase %}
