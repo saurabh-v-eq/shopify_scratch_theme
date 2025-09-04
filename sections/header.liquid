@@ -8,26 +8,32 @@
       </a>
     {% endif %}
   </div>
+
+  <!-- Hamburger menu -->
   <div class="nav-toggle" id="nav-toggle">&#9776;</div>
-  <div class="nav-links-wrapper">
+
+  <!-- Desktop nav -->
+  <div class="nav-links-wrapper desktop-nav">
     <ul class="nav-links">
       {% for link in linklists['main-menu'].links %}
         <a href="{{ link.url }}" class="nav-link">
           {% if link.title != blank %}
             <li class="link-item">{{ link.title | escape }}</li>
-          {% endif %} 
+          {% endif %}
         </a>
       {% endfor %}
     </ul>
   </div>
+
+  <!-- Right icons -->
   <div class="icons">
-    <div class="search-bar">
+    <div class="search-bar desktop-search">
       <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
         <div class="input-group">
-          <input 
-            type="search" 
-            name="q" 
-            id="SearchInput" 
+          <input
+            type="search"
+            name="q"
+            id="SearchInput"
             required
           >
           <label for="SearchInput">Search products...</label>
@@ -57,7 +63,116 @@
   </div>
 </section>
 
+<!-- Mobile drawer -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+<div class="mobile-drawer" id="mobile-drawer">
+  <div class="drawer-header">
+    <span id="drawer-close">&times;</span>
+  </div>
+  <div class="drawer-content">
+    <!-- Mobile search -->
+    <div class="search-bar">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+        <div class="input-group">
+          <input
+            type="search"
+            name="q"
+            id="SearchInputMobile"
+            required
+          >
+          <label for="SearchInputMobile">Search products...</label>
+          <button type="submit" aria-label="Search">
+            {% render 'icons', icon: 'search' %}
+          </button>
+        </div>
+      </form>
+      <div id="predictive-search-results-mobile" class="predictive-results"></div>
+    </div>
+
+    <!-- Mobile nav -->
+    <ul class="nav-links mobile-nav">
+      {% for link in linklists['main-menu'].links %}
+        <a href="{{ link.url }}" class="nav-link">
+          {% if link.title != blank %}
+            <li class="link-item">{{ link.title | escape }}</li>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
 {% style %}
+  /* Mobile drawer (hidden by default) */
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.3);
+    transition: left 0.3s ease;
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .mobile-drawer.open {
+    left: 0;
+  }
+
+  .drawer-header {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #drawer-close {
+    font-size: 28px;
+    cursor: pointer;
+  }
+
+  .drawer-content {
+    margin-top: 20px;
+  }
+
+  .mobile-drawer .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .mobile-drawer .nav-link {
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1.1rem;
+  }
+
+  /* Hide desktop nav & search on mobile */
+  @media (max-width: 768px) {
+    .desktop-nav,
+    .desktop-search {
+      display: none !important;
+    }
+  }
+
+  .mobile-nav-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    height: 100%; 
+    width: 100%;
+    background: #00000080;
+    z-index: 9998;
+    display: none;
+  }
+
+  .mobile-nav-overlay.active {
+    display: block;
+  }
+
   .header-container {
     display: flex;
     align-items: center;
@@ -200,7 +315,7 @@
     position: relative;
   }
 
-  .search-form label{
+  .search-form label {
     position: absolute;
     left: 10;
     top: 50%;
@@ -268,93 +383,125 @@
   .predictive-results a:hover {
     color: #0073e6;
   }
-
 {% endstyle %}
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const searchInput = document.getElementById("SearchInput");
-  const resultsContainer = document.getElementById("predictive-search-results");
+  document.addEventListener('DOMContentLoaded', function () {
+    function initPredictiveSearch(inputId, resultsId) {
+      const searchInput = document.getElementById(inputId);
+      const resultsContainer = document.getElementById(resultsId);
 
-  let debounceTimer;
+      if (!searchInput || !resultsContainer) return;
 
-  searchInput.addEventListener("input", function () {
-    const query = this.value.trim();
-    clearTimeout(debounceTimer);
+      let debounceTimer;
 
-    if (query.length < 2) {
-      resultsContainer.innerHTML = "";
-      resultsContainer.style.display = "none";
-      return;
+      searchInput.addEventListener('input', function () {
+        const query = this.value.trim();
+        clearTimeout(debounceTimer);
+
+        if (query.length < 2) {
+          resultsContainer.innerHTML = '';
+          resultsContainer.style.display = 'none';
+          return;
+        }
+
+        debounceTimer = setTimeout(() => {
+          fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,collection,article,page`)
+            .then((response) => response.json())
+            .then((data) => {
+              resultsContainer.innerHTML = '';
+
+              // PRODUCTS
+              if (data.resources.results.products.length > 0) {
+                const productsTitle = document.createElement('h4');
+                productsTitle.textContent = 'Products';
+                resultsContainer.appendChild(productsTitle);
+
+                const ul = document.createElement('ul');
+
+                data.resources.results.products.forEach((product) => {
+                  const li = document.createElement('li');
+                  li.innerHTML = `
+                  <a href="${product.url}">
+                    <img src="${product.image}" alt="${product.title}" width="40" height="40">
+                    <h4>${product.title}</h4>
+                    <p>${product.price}</p>
+                  </a>
+                `;
+                  ul.appendChild(li);
+                });
+
+                resultsContainer.appendChild(ul);
+              }
+
+              // COLLECTIONS
+              if (data.resources.results.collections.length > 0) {
+                const collectionsTitle = document.createElement('h4');
+                collectionsTitle.textContent = 'Collections';
+                resultsContainer.appendChild(collectionsTitle);
+
+                const ul = document.createElement('ul');
+                data.resources.results.collections.forEach((collection) => {
+                  const li = document.createElement('li');
+                  li.innerHTML = `<a href="${collection.url}">${collection.title}</a>`;
+                  ul.appendChild(li);
+                });
+                resultsContainer.appendChild(ul);
+              }
+
+              resultsContainer.style.display = 'block';
+            })
+            .catch((err) => {
+              console.error('Predictive search error:', err);
+            });
+        }, 300);
+      });
+
+      // Hide results on outside click
+      document.addEventListener('click', function (e) {
+        if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
+          resultsContainer.style.display = 'none';
+        }
+      });
     }
 
-    debounceTimer = setTimeout(() => {
-      fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,collection,article,page`)
-        .then(response => response.json())
-        .then(data => {
-          // Clear old results
-          resultsContainer.innerHTML = "";
-
-          // PRODUCTS
-          if (data.resources.results.products.length > 0) {
-            const productsTitle = document.createElement("h4");
-            productsTitle.textContent = "Products";
-            resultsContainer.appendChild(productsTitle);
-
-            const ul = document.createElement("ul");
-
-            data.resources.results.products.forEach(product => {
-              const li = document.createElement("li");
-
-              li.innerHTML = `
-                <a href="${product.url}">
-                  <img src="${product.image}" alt="${product.title}" width="40" height="40">
-                  <h4>${product.title}</h4>
-                  <p>${product.price}</p>
-                </a>
-              `;
-
-              ul.appendChild(li);
-            });
-
-            resultsContainer.appendChild(ul);
-          }
-
-          // COLLECTIONS
-          if (data.resources.results.collections.length > 0) {
-            const collectionsTitle = document.createElement("h4");
-            collectionsTitle.textContent = "Collections";
-            resultsContainer.appendChild(collectionsTitle);
-
-            const ul = document.createElement("ul");
-
-            data.resources.results.collections.forEach(collection => {
-              const li = document.createElement("li");
-              li.innerHTML = `<a href="${collection.url}">${collection.title}</a>`;
-              ul.appendChild(li);
-            });
-
-            resultsContainer.appendChild(ul);
-          }
-
-          resultsContainer.style.display = "block";
-        })
-        .catch(err => {
-          console.error("Predictive search error:", err);
-        });
-    }, 300); // debounce 300ms
+    // Init for both desktop & mobile
+    initPredictiveSearch('SearchInput', 'predictive-search-results');
+    initPredictiveSearch('SearchInputMobile', 'predictive-search-results-mobile');
   });
 
-  document.addEventListener("click", function (e) {
-    if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
-      resultsContainer.style.display = "none";
-      searchInput.value = "";
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.getElementById('nav-toggle');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const drawerClose = document.getElementById('drawer-close');
+    const navDrawerOverlay = document.getElementById('mobile-nav-overlay')
+
+    navToggle.addEventListener('click', () => {
+      mobileDrawer.classList.add('open');
+      navDrawerOverlay.classList.add('active');
+      document.body.classList.add('no-scroll');
+    });
+
+    drawerClose.addEventListener('click', () => {
+      mobileDrawer.classList.remove('open');
+      navDrawerOverlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    });
+
+    // Optional: close drawer when clicking outside
+    document.addEventListener('click', (e) => {
+      if (
+        mobileDrawer.classList.contains('open') &&
+        !mobileDrawer.contains(e.target) &&
+        !navToggle.contains(e.target)
+      ) {
+        mobileDrawer.classList.remove('open');
+        navDrawerOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+      }
+    });
   });
-  
-});
 </script>
-
 
 {% schema %}
 {

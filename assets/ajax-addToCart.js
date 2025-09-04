@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const loadMoreBtn = document.getElementById("load-more");
-  const productGrid = document.getElementById("product-grid");
   const cartOverlay = document.getElementById("cart-drawer-overlay");
   const cartDrawer = document.getElementById("cart-drawer");
   let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
@@ -154,20 +153,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, "text/html");
+        console.log(doc);
 
-        const newProducts = doc.querySelectorAll("#product-grid .product-card");
+        // Get products from the new page
+        const newProducts = doc.querySelectorAll("#product-list .product-card");
 
+        // Append into the product list only
+        const productList = document.querySelector("#product-list");
         newProducts.forEach((product) => {
-          productGrid.appendChild(product);
+          productList.appendChild(product);
         });
 
-        // re-bind AJAX events for new elements
         attachAddToCartEvents();
         callWishlist();
         updateRatingStars();
 
+        // Update Load More button
         const newLoadMoreBtn = doc.querySelector("#load-more");
-
         if (newLoadMoreBtn) {
           loadMoreBtn.setAttribute(
             "data-next-url",
@@ -176,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
           loadMoreBtn.disabled = false;
           loadMoreBtn.textContent = "Load More";
         } else {
-          loadMoreBtn.remove();
+          loadMoreBtn.closest(".load-more-wrapper").remove();
         }
       } catch (error) {
         console.error(error);
@@ -185,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
 
   /* ---------------- WISHLIST ---------------- */
   const callWishlist = () => {
