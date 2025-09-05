@@ -1,0 +1,80 @@
+<!-- HTML -->
+<div class="btn-container">
+  <button class="btn-render" type="button" aria-label="Render">Render</button>
+</div>
+
+{% style %}
+    .btn-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: #f9fafb;
+        padding: 2rem;
+    }
+
+    .btn-render {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: 0;
+        cursor: pointer;
+        background: linear-gradient(180deg, #2563eb 0%, #1e40af 100%);
+        color: white;
+        box-shadow: 0 6px 18px rgba(30, 64, 175, 0.18);
+        transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .btn-render:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(30, 64, 175, 0.22);
+    }
+
+    .btn-render:active {
+        transform: translateY(0);
+        box-shadow: 0 6px 16px rgba(30, 64, 175, 0.18);
+    }
+
+    .btn-render:focus {
+        outline: 3px solid rgba(59, 130, 246, 0.25);
+        outline-offset: 2px;
+    }
+
+    .btn-render:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+{% endstyle %}
+
+<script>
+    const button = document.querySelector('.btn-render');
+
+    button.addEventListener('click', () => {
+        fetch(`${window.Shopify.routes.root}?sections=main-product`)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            const container = document.querySelector('.btn-container');
+            container.innerHTML = data['main-product'];
+        })
+    })
+</script>
+
+{% schema %}
+    {
+        "name": "Section Render",
+        "settings": [],
+        "presets": [
+            {
+                "name": "Section Render"
+            }
+        ]
+    }
+{% endschema %}

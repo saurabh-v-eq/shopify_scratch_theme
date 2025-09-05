@@ -1,6 +1,6 @@
 <section class="product-carousel-section">
   <div class="container">
-    <h2 class="carousel-heading">Featured Products</h2>
+    <h2 class="carousel-heading">{{ section.settings.section_heading }}</h2>
 
     <div class="swiper product-carousel">
       <div class="swiper-wrapper">
@@ -165,6 +165,14 @@
 {% schema %}
 {
   "name": "t:sections.product-carousel.name",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Section Heading",
+      "id": "section_heading",
+      "default": "Featured Products"
+    }
+  ],
   "blocks": [
     {
       "type": "product_block",

@@ -108,7 +108,13 @@ document.addEventListener("DOMContentLoaded", () => {
 {% schema %}
     {
         "name": "t:sections.product-recommendation.name",
-        "settings": [],
+        "settings": [
+          {
+            "type": "text",
+            "label": "Section Heading",
+            "id": "section_heading"
+          }
+        ],
         "presets": [
             {
                 "name": "t:sections.product-recommendation.presets.name"

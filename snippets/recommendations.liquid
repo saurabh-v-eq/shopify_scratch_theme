@@ -4,9 +4,9 @@
 >
   {% if recommendations.performed? and recommendations.products_count > 0 %}
     {% if recommendations.intent == 'related' %}
-      <h2>You may also like</h2>
+      <h2>{{ section.settings.section_heading }}</h2>
     {% elsif recommendations.intent == 'complementary' %}
-      <h2>Pair it with</h2>
+      <h2>{{ section.settings.section_heading }}</h2>
     {% endif %}
 
     <div class="recommendation-slider">

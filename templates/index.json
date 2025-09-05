@@ -114,7 +114,9 @@
         "product_block_gENENC"
       ],
       "name": "t:sections.product-carousel.presets.name",
-      "settings": {}
+      "settings": {
+        "section_heading": "Featured Products"
+      }
     },
     "collections_8d7PWy": {
       "type": "collections",
@@ -124,17 +126,10 @@
           "settings": {
             "collection": "frontpage"
           }
-        },
-        "collection_3xkbHq": {
-          "type": "collection",
-          "settings": {
-            "collection": "best-speakers"
-          }
         }
       },
       "block_order": [
-        "collection_m8eqEF",
-        "collection_3xkbHq"
+        "collection_m8eqEF"
       ],
       "name": "t:sections.collections.presets.name",
       "settings": {
@@ -144,7 +139,12 @@
     "newsletter_qxXgTT": {
       "type": "Newsletter",
       "name": "Newsletter",
-      "settings": {}
+      "settings": {
+        "main_heading": "Subscribe to Our Newsletter",
+        "sub_heading": "Be the first to know about new arrivals, exclusive deals, and more.",
+        "btn_title": "Subscribe",
+        "msg_text": "Thank you for subscribing!"
+      }
     }
   },
   "order": [

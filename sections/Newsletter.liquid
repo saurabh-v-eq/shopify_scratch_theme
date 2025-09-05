@@ -1,7 +1,7 @@
 <section class="newsletter-signup">
   <div class="newsletter-container">
-    <h2>Subscribe to Our Newsletter</h2>
-    <p>Be the first to know about new arrivals, exclusive deals, and more.</p>
+    <h2>{{ section.settings.main_heading }}</h2>
+    <p>{{ section.settings.sub_heading }}</p>
 
     {% form 'customer', class: 'newsletterForm', id: 'newsletter-form' %}      
       <input
@@ -10,10 +10,10 @@
         placeholder="Enter your email"
         required
       >
-      <button type="submit" class="subscribe-btn">Subscribe</button>
+      <button type="submit" class="subscribe-btn">{{ section.settings.btn_title }}</button>
 
       {% if form.posted_successfully? %}
-        <P class="success-message">Thank you for subscribing!</P>
+        <P class="success-message">{{ section.settings.msg_text }}</P>
       {% elsif form.errors %}
         <P class="error-message">{{ form.errors | default_errors }}</P>
       {% endif %}
@@ -133,7 +133,35 @@
 {% schema %}
 {
   "name": "t:sections.Newsletter.name",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content",
+    },
+    {
+      "type": "text",
+      "label": "Main Heading",
+      "id": "main_heading",
+      "default": "Subscribe to Our Newsletter"
+    },
+    {
+      "type": "text",
+      "label": "Sub Heading",
+      "id": "sub_heading",
+      "default": "Be the first to know about new arrivals, exclusive deals, and more."
+    },
+    {
+      "type": "text",
+      "label": "Button Title",
+      "id": "btn_title",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "label": "Subcription message text",
+      "id": "msg_text"
+    }
+  ],
   "presets": [
     {
       "name": "t:sections.Newsletter.presets.name"

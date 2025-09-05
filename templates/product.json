@@ -32,7 +32,9 @@
     "product_recommendations_6MYP8m": {
       "type": "product-recommendations",
       "name": "t:sections.product-recommendation.presets.name",
-      "settings": {}
+      "settings": {
+        "section_heading": "You may also like"
+      }
     }
   },
   "order": [
