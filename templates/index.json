@@ -126,10 +126,17 @@
           "settings": {
             "collection": "frontpage"
           }
+        },
+        "collection_DKiYKk": {
+          "type": "collection",
+          "settings": {
+            "collection": "eternal-elegance"
+          }
         }
       },
       "block_order": [
-        "collection_m8eqEF"
+        "collection_m8eqEF",
+        "collection_DKiYKk"
       ],
       "name": "t:sections.collections.presets.name",
       "settings": {
@@ -145,12 +152,26 @@
         "btn_title": "Subscribe",
         "msg_text": "Thank you for subscribing!"
       }
+    },
+    "contact_qDxNqj": {
+      "type": "contact",
+      "name": "Contact form",
+      "settings": {}
+    },
+    "blog_posts_67TgUp": {
+      "type": "blog-posts",
+      "name": "Blog Posts",
+      "settings": {
+        "select_blog": "latest-blogs"
+      }
     }
   },
   "order": [
     "hero_banner_pkELXj",
     "product_carousel_8f7bMV",
     "collections_8d7PWy",
-    "newsletter_qxXgTT"
+    "newsletter_qxXgTT",
+    "contact_qDxNqj",
+    "blog_posts_67TgUp"
   ]
 }

@@ -1,0 +1,18 @@
+{% if block.settings.icon_image %}
+  <img src="{{ block.settings.icon_image | image_url }}" alt="{{ block.settings.alt_text }}" height="" width="">
+{% endif %}
+
+{% schema %}
+{
+  "name": "Icon",
+  "settings": [
+    { "type": "image_picker", "id": "icon_image", "label": "Icon Image" },
+    { "type": "text", "id": "alt_text", "label": "Alt Text" }
+  ],
+  "presets": [
+    {
+      "name": "Icon"
+    }
+  ]
+}
+{% endschema %}

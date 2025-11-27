@@ -1,0 +1,91 @@
+{% if section.settings.select_blog != blank %}
+  {% assign selected_blog = blogs[section.settings.select_blog] %}
+  {% if selected_blog.articles_count > 0 %}
+    <div class="blog-posts">
+      {% for article in selected_blog.articles limit: 3 %}
+        <div class="blog-post">
+          <h3>
+            <a href="{{ article.url }}">{{ article.title }}</a>
+          </h3>
+          {% if article.image %}
+            <img src="{{ article.image | image_url }}" alt="{{ article.title }}" height="" width="">
+          {% endif %}
+          <p>{{ article.excerpt | strip_html | truncate: 100 }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No articles found in this blog.</p>
+  {% endif %}
+{% endif %}
+
+{% stylesheet %}
+  .blog-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 2rem 8rem;
+    background-color: #f9f9f9;
+  }
+
+  .blog-post {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .blog-post:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+  }
+
+  .blog-post img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .blog-post h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 1rem;
+  }
+
+  .blog-post h3 a {
+    color: #222;
+    text-decoration: none;
+  }
+
+  .blog-post h3 a:hover {
+    color: #c49b63;
+  }
+
+  .blog-post p {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0 1rem 1.2rem;
+    line-height: 1.5;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Blog Posts",
+  "settings": [
+    {
+      "type": "blog",
+      "label": "Select Blog",
+      "id": "select_blog"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Posts"
+    }
+  ]
+}
+{% endschema %}

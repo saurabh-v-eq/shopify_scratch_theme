@@ -1,0 +1,19 @@
+<section class="features-section">
+  <div class="features-wrapper">
+    {% content_for 'blocks' %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Features Section",
+  "blocks": [
+    {
+      "type": "feature-card"
+    }
+  ],
+  "presets": [
+    { "name": "Features Section" }
+  ]
+}
+{% endschema %}

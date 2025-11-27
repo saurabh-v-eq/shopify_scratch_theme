@@ -1,0 +1,124 @@
+<article class="article">
+  <header class="article-header">
+    <h1>{{ article.title }}</h1>
+    <p class="article-meta">
+      {% if section.settings.show_date %}
+        Posted on {{ article.published_at | date: '%B %d, %Y' }}
+      {% endif %}
+      {% if article.author and section.settings.show_author %}
+        by {{ article.author }}
+      {% endif %}
+    </p>
+  </header>
+
+  {% if article.image and section.settings.show_image %}
+    <div class="article-image">
+      <img src="{{ article.image | image_url}}" alt="{{ article.title }}" height="" width="">
+    </div>
+  {% endif %}
+
+  <div class="article-content">
+    {{ article.content }}
+  </div>
+</article>
+{% stylesheet %}
+  .article {
+    max-width: 850px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+    font-family: 'Work Sans', Arial, sans-serif;
+    color: #333;
+    line-height: 1.7;
+  }
+
+  .article-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .article-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #111;
+  }
+
+  .article-meta {
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .article-image {
+    margin: 2rem 0;
+  }
+
+  .article-image img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .article-content {
+    font-size: 1rem;
+    color: #444;
+  }
+
+  .article-content p {
+    margin-bottom: 1.2rem;
+  }
+
+  .article-content h2,
+  .article-content h3 {
+    margin: 2rem 0 1rem;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .article-content a {
+    color: #c49b63; 
+    text-decoration: underline;
+  }
+
+  .article-content a:hover {
+    color: #000;
+  }
+
+  .article-content hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 2rem 0;
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Main Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show publish date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show featured image",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main Article"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,108 @@
+<h2>Contact Form</h2>
+{% form 'contact', class: 'contact-form' %}
+  {% if form.posted_successfully? %}
+    <div class="form-success">
+      <p>{{ form.success }}</p>
+    </div>
+  {% elsif form.errors %}
+    <div class="form-errors">
+      <p><strong>{{ form.errors }}</strong></p>
+    </div>
+  {% endif %}
+
+  <div class="first-name">
+    <label for="first-name">First name</label>
+    <input type="text" name="contact[first_name]" id="first-name" value="{{ form.first_name }}">
+  </div>
+
+  <div class="email">
+    <label for="email">Email</label>
+    <input type="email" name="contact[email]" id="email" value="{{ form.email }}">
+  </div>
+
+  <div class="message">
+    <label for="message">Message</label>
+    <textarea name="contact[body]" id="message">{{ form.body }}</textarea>
+  </div>
+
+  <div class="submit">
+    <input type="submit" value="Send Message">
+  </div>
+{% endform %}
+
+
+{% stylesheet %}
+  /* Contact Form Styles */
+  h2{
+    text-align: center;
+  }
+
+  form.contact-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: system-ui, sans-serif;
+  }
+
+  form.contact-form div {
+    margin-bottom: 1.5rem;
+  }
+
+  form.contact-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  form.contact-form input[type='text'],
+  form.contact-form input[type='email'],
+  form.contact-form textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  form.contact-form input:focus,
+  form.contact-form textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    outline: none;
+  }
+
+  form.contact-form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  form.contact-form .submit input[type='submit'] {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background-color: black;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Contact form"
+    }
+  ]
+}
+{% endschema %}

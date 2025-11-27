@@ -1,0 +1,90 @@
+<div class="feature-card" {{ block.shopify_attributes }}>
+  {% content_for 'blocks' %}
+</div>
+
+<style>
+  .features-section {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+  }
+
+  .features-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .feature-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+    text-align: center;
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .feature-card img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+    object-fit: contain;
+  }
+
+  .feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .feature-card p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .feature-card {
+      flex: 0 0 45%;
+      padding: 20px 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .feature-card {
+      flex: 0 0 100%;
+      padding: 15px 10px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+    }
+
+    .feature-card img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Feature Card",
+  "blocks": [{ "type": "_icon" }, { "type": "_title" }, { "type": "description" }],
+  "presets": [{ "name": "Feature Card" }]
+}
+{% endschema %}

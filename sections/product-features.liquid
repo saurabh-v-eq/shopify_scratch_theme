@@ -1,0 +1,21 @@
+{% comment %} Nested blocks {% endcomment %}
+<section class="product-features">
+  <table>
+    {% content_for 'block', type: 'table-header', id: 'table-header' %}
+    <tbody>
+      {% content_for 'blocks' %}
+    </tbody>
+  </table>
+</section>
+
+{% schema %}
+{
+  "name": "Product Features Table",
+  "blocks": [
+    { "type": "table-row" }
+  ],
+  "presets": [
+    { "name": "Product Features Table" }
+  ]
+}
+{% endschema %}

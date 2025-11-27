@@ -1,0 +1,38 @@
+{% if block.settings.type_of_cell == 'header' %}
+  <th {{ block.shopify_attributes }}>
+{% else %}
+  <td {{ block.shopify_attributes }}>
+{% endif %}
+
+  {% content_for 'blocks' %}
+
+{% if block.settings.type_of_cell == 'header' %}
+  </th>
+{% else %}
+  </td>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Table Cell",
+  "blocks": [
+    { "type": "@theme" }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "type_of_cell",
+      "label": "Cell Type",
+      "options": [
+        { "value": "header", "label": "Header" },
+        { "value": "body", "label": "Body" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+        "name": "Table Cell"
+    }
+  ]
+}
+{% endschema %}

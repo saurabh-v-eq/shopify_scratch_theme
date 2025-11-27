@@ -91,11 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
 
         try {
-          const formData = new FormData(form);
+          const formData = new FormData(form);   // return all inputs of form as key-value pairs
           const mainVariantId = formData.get("id");
           const quantity = formData.get("quantity") || 1;
 
-          // collect line item properties (message, upload, cropped image)
+          // [...formData] will speard inputs into an array
+          // from array collect all keys starts with properties
+          // Object.fromEntries will convert them back into an object
           const properties = Object.fromEntries(
             [...formData].filter(([key]) => key.startsWith("properties["))
           );
