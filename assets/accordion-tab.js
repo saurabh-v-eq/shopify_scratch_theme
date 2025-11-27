@@ -11,7 +11,7 @@ class AccordionTab extends HTMLElement {
     }
 
     disconnectedcallBack() {
-        
+
     }
 
     handleToggle() {

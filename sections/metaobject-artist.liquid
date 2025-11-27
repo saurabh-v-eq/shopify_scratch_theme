@@ -1,0 +1,36 @@
+
+{% for artist in shop.metaobjects.artist.values %}
+    {{ artist.name }}
+    {{ artist.description | metafield_tag }}
+    {{ artist.image | image_url: width: 40, height: 40 | image_tag }}
+{% endfor %}
+{% schema %}
+{
+  "name": "Metaobject – Artist",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bio",
+      "label": "Show bio",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show image",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Metaobject – Artist"
+    }
+  ]
+}
+{% endschema %}

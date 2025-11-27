@@ -61,6 +61,7 @@
             return res.json()
         })
         .then(data => {
+            console.log('data', data);
             const container = document.querySelector('.btn-container');
             container.innerHTML = data['main-product'];
         })

@@ -164,6 +164,11 @@
       "settings": {
         "select_blog": "latest-blogs"
       }
+    },
+    "section_render_dqYGKD": {
+      "type": "section-render",
+      "name": "Section Render",
+      "settings": {}
     }
   },
   "order": [
@@ -172,6 +177,7 @@
     "collections_8d7PWy",
     "newsletter_qxXgTT",
     "contact_qDxNqj",
-    "blog_posts_67TgUp"
+    "blog_posts_67TgUp",
+    "section_render_dqYGKD"
   ]
 }
